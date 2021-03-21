@@ -1,0 +1,89 @@
+[
+    {
+        "ref": "https://tigawa.github.io/til/vscode%E3%81%AE%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E3%81%8A%E3%81%99%E3%81%99%E3%82%81/",
+        "title": "Vscodeのプラグインおすすめ",
+        "section": "TIL",
+        "date" : "2021.03.20",
+        "body": " ここのサイトがすごく参考になる  "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/til/scrum_boot_camp-%E5%A2%97%E8%A3%9C%E6%94%B9%E8%A8%82%E7%89%88-%E3%82%92%E8%AA%AD%E3%82%93%E3%81%A7/",
+        "title": "SCRUM_BOOT_CAMP 増補改訂版 を読んで",
+        "section": "TIL",
+        "date" : "2020.06.04",
+        "body": "SCRUM_BOOT_CAMP 増補改訂版 を読んで思ったことを列挙します。\n\n心に残ったこと。  朝(夕)会は開発チームのもの。 朝(夕)会は誰かへの進捗報告の場になってはいけない。 リリースレゴ（レゴブロックを徐々にみんなで組み立てる）  SCRUM(スクラム)とは  5つのイベント（会議など） 3つのロール 3つの成果物  ５つのイベント  スプリント スプリントプランニング デイリースクラム(朝会) スプリントレビュー スプリントレトロスペクティブ（ふりかえり）  ３つのロール  プロダクトオーナ(PO) スクラムマスタ 開発チーム  ３つ成果物  プロダクトバックログ スプリントバックログ インクリメント（動くソフトウェア）  改めてわかったこと 1. ユーザストーリのフォーマット  \u0026lt;どういったユーザや顧客\u0026gt;として \u0026lt;どんな機能や性能\u0026gt; がほしい それは、\u0026lt;どんなことが達成したい\u0026gt;ためだ。  2. 役割  PO = 何を実現したいか考える(What) 開発チーム=どうやって実現するかを考える。(How) "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/til/win_copy_and_start/",
+        "title": "特定のフォルダにファイルをコピーして開くサンプル",
+        "section": "TIL",
+        "date" : "2020.06.04",
+        "body": " @echo off setlocal set cached_folder=%userprofile%\\cached_delete_ok\\ set dst_file=\u0026quot;%cached_folder%%~n1%~x1\u0026quot; set src_file=%1 if not exist %cached_folder% mkdir %cached_folder% copy /Y %src_file% %dst_file% start \u0026quot;hoge\u0026quot; %dst_file% endlocal  ちょっとはまったところ  ファイル名に空白を含むと正しく起動しない。  解決方法  start \u0026quot;hoge\u0026quot;のようにhogeを付けて回避する。  "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/til/sam_local_cheat_sheet/",
+        "title": "sam local cheat sheet",
+        "section": "TIL",
+        "date" : "2020.02.08",
+        "body": " 初期設定  sam init \u0026ndash;runtime nodejs12.x npm install  初回  sam build sam deploy \u0026ndash;guided  ちゃんとパラメータの入力を求めている。\n２回目以降  sam deploy  ライブラリを追加する場合  cd node のプロジェクトに移動 npm i xxxxx -S  aws cloudformation stack local に対してはこちらを実行するイメージかな\n検証 aws cloudformation validate-template \u0026ndash;template-body file://template.yaml\ndeploy aws cloudformation deploy \u0026ndash;template-file template.yaml \u0026ndash;stack-name my-new-stack \u0026ndash;parameter-overrides UploadS3BucketName=knowhouse.upload\nスタックの削除 aws cloudformation delete-stack \u0026ndash;stack-name my-new-stack4\nスタックの一括削除 aws cloudformation list-stacks | jq -r .StackSummaries[].StackName | xargs -L 1 aws cloudformation delete-stack \u0026ndash;stack-name localstackに対しても正しく動作できた。 ここから、S3 Uploadの続きをやるべし！\nhttps://qiita.com/okoshi/items/b90265745a5481c51128#%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%E3%81%AE%E3%81%BF%E5%8F%AF%E8%83%BD%E3%81%AA-iam-%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC%E3%82%92%E4%BD%9C%E6%88%90\n上の例は難しい、STSでロールを取得しない形で一度実装してみる https://qiita.com/hazigin/items/cd8e5a589b026ec771bf\nlamuda + S3 + localstack S3 localstackに接続する方法 https://dev.classmethod.jp/etc/sam-local-with-localstack/\nS3Upload ACL  S3 Upload ACLなど https://hotchpotchj37.wordpress.com/2017/03/08/aws-sdk-node-js-%E3%81%A7-s3-putobject%E3%81%99%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%AB%E6%B0%97%E3%82%92%E3%81%A4%E3%81%91%E3%82%8B%E3%81%93%E3%81%A8/  STSを利用した S3のアップロード https://qiita.com/okoshi/items/b90265745a5481c51128gi\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/til/promise_then_promise/",
+        "title": "Promiseをthenでつなげて、Promiseを呼び出す方法",
+        "section": "TIL",
+        "date" : "2020.02.08",
+        "body": "function putObjectToS3(key, data) { return new Promise((resolve, reject) =\u0026gt; { var params = { Bucket: bucket, Key: key, Body: data } console.log('p11') s3.putObject(params, function (err, data) { if (err) { reject(err); } else { console.log('p11') resolve(data); } }); }).then((data) =\u0026gt; new Promise(function (resolve, reject) { var params = { Bucket: bucket }; s3.getBucketLocation(params, function (err, data) { if (err) console.log(err, err.stack); // an error occurred let location = data.LocationConstraint; console.log(location, data); let link = util.format(\u0026quot;https://s3-%s.amazonaws.com/%s/%s\u0026quot;, location, bucket, key); console.log(link) resolve(link); }); }));  "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/til/bat%E9%9B%9B%E5%BD%A2/",
+        "title": "BAT雛形",
+        "section": "TIL",
+        "date" : "2019.11.27",
+        "body": " コード setlocal @echo off CD /D \u0026quot;%~dp0\u0026quot; endlocal  補足説明 @は、そこコマンド自体をECHOしないための設定 ECHO OFF だけだと ECHO OFFがOFFする前だからコンソールに出力される。 そのため＠ECHOにして防いでいる。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/til/hugo%E3%82%92server%E3%81%A7%E3%83%96%E3%83%A9%E3%82%A6%E3%82%B6%E3%82%82%E5%90%8C%E6%99%82%E3%81%AB%E8%B5%B7%E5%8B%95%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/",
+        "title": "Hugoのserverコマンドでブラウザも同時に起動する方法",
+        "section": "TIL",
+        "date" : "2019.10.06",
+        "body": "Hugoのserverコマンドでブラウザも同時に起動する方法を紹介します。 ugo server -w \u0026amp; sleep 1 \u0026amp;\u0026amp; chrome http://localhost:1313 \u0026amp;\u0026amp; fg  aliasに設定すると便利です ~/.bashrc\nalias hs='hugo server -w \u0026amp; sleep 1 \u0026amp;\u0026amp; chrome http://localhost:1313 \u0026amp;\u0026amp; fg' "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/til/grep%E8%87%AA%E5%88%86%E8%87%AA%E8%BA%AB%E3%81%AE%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%AB%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/",
+        "title": "ps時にGrep自身のプロセスを非表示にする方法",
+        "section": "TIL",
+        "date" : "2019.10.06",
+        "body": " ps | grep hugo | grep -v grep ps | grep [h]ugo  指定した名前のプロセスをkillするsh #!/bin/bash ps | grep $1 | grep -v grep | awk '{print $1}' | xargs kill  以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/til/sh%E9%9B%9B%E5%BD%A2/",
+        "title": "シェルスクリプト雛形",
+        "section": "TIL",
+        "date" : "2019.10.06",
+        "body": "今後徐々に足して行きます。 #! /bin/bash #s h格納場所にカレントディレクトリを移動 cd `dirname $0` "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/til/%E7%9F%A9%E5%BD%A2%E9%81%B8%E6%8A%9E/",
+        "title": "VS Codeの矩形選択のショートカットキー",
+        "section": "TIL",
+        "date" : "2019.09.07",
+        "body": "VSCodeの矩形選択のショートカットキーは次になります。\nMACのショートカット ［Shift］＋［Option］＋［Command］＋矢印キー  \nWindowsのショートカット ［Ctrl］＋［Shift］＋［Alt］＋矢印キー "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/til/%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%88%E3%83%AA%E9%85%8D%E4%B8%8B%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E6%96%87%E5%AD%97%E3%82%B3%E3%83%BC%E3%83%89%E4%B8%80%E6%8B%AC%E7%BD%AE%E6%8F%9B%E3%81%99%E3%82%8B/",
+        "title": "ディレクトリ配下のファイルの文字コード一括置換する",
+        "section": "TIL",
+        "date" : "2019.07.29",
+        "body": "find . -name '*.cs' -type f | xargs -L 1 nkf -u --overwrite -w  "
+    }
+]

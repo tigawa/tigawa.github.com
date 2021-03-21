@@ -1,0 +1,969 @@
+[
+    {
+        "ref": "https://tigawa.github.io/blog/2018/03/04/jersey/",
+        "title": "jerseyの紹介",
+        "section": "post",
+        "date" : "2018.03.04",
+        "body": "jersey(ジャージー)について紹介します。\njerseyとは、 Sun による JAX-RS のリファレンス実装です。 つまりは、JAX-RS という、RESTful APIを作るのに特化した仕様があり、それをSunが実装したものです。\njersey以外にも、JAX-RS実装はいくつかあります。\n\n   ライブラリ名 説明　 GitHubの⭐の数(執筆時点)     jersey sunによる実装 2,624件   CXF \u0008Apacheによる\u0008\u0008実装　\u0008SOAPなど幅広い 398件   RESTEasy JBoss の JAX-RS プロジェクト 687件   Restlet JAX-RS が生まれる前から存在している 553件    \u0008なぜ、jerseyを選んだかというと、\u0008\u0008\u0008REST jav\u0008aで検索した際に、一番先に見つかったのと、GitHubでStarの\u0008数が一番多いからです。 \u0008\n実装例 \u0008\u0008bulid.gradle　 以下を追加する。\n// 2.26だと、ClientBilderが使用できない　なぜ？ compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.25' // json-\u0026gt;オブジェクトに変換するライブラリ compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.25'  \u0008\u0008java　(Getの実装例) import javax.ws.rs.client.Client; import javax.ws.rs.client.ClientBuilder; import javax.ws.rs.core.GenericType; 〜 省略 〜 Client client = ClientBuilder.newClient(); List\u0026lt;Person\u0026gt; list = client.target(\u0026quot;http://localhost:8882\u0026quot;) .path(\u0026quot;/sample_json\u0026quot;) .queryParam(\u0026quot;token\u0026quot;, \u0026quot;xxxxx\u0026quot;) .request() .get(new GenericType\u0026lt;List\u0026lt;Person\u0026gt;\u0026gt;() {});  java (Postの実装例) import javax.ws.rs.client.ClientBuilder; import javax.ws.rs.client.Entity; import javax.ws.rs.core.MediaType; import javax.ws.rs.core.MultivaluedHashMap; 〜 省略 〜 Client client = ClientBuilder.newClient(); String result = client.target(\u0026quot;http://localhost:8882\u0026quot;) .path(\u0026quot;/sample_json\u0026quot;) .request(MediaType.APPLICATION_XML_TYPE) .header(\u0026quot;X-token\u0026quot;, \u0026quot;ID:xxxxxx\u0026quot;) .post(Entity.entity(dto, MediaType.APPLICATION_FORM_URLENCODED_TYPE),;  HTTPステータスが404や、500の場合は、例外が発生します。 どんな例外が発生するか調べてみました。\n   httpStatus 例外     接続エラー javax.ws.rs.ProcessingException   400 javax.ws.rs.BadRequestException   404 javax.ws.rs.NotFoundException   409 javax.ws.rs.ClientErrorException   500 javax.ws.rs.InternalServerErrorException    簡単につかえて、とても便利です。積極的に使って行きたいですね。\n以上です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2018/02/03/cascade/",
+        "title": "カスケード処理 \u003e",
+        "section": "post",
+        "date" : "2018.02.03",
+        "body": "カスケード処理とは、CSS で 最終的に適用する優先度を決める仕組みのことです。\ncascade を 辞書で引くと、以下のような意味があり、なぜ、優先度を決めることがカスケードになるのか不明\u0026hellip;\n\n【自動】 滝のように落ちる、滝になって落ちる 【他動】 ～を滝のように落とす ～を次へとつなげる、転送する 【名】 （連続した）小さな滝 〔液体や小さな物の〕滝状の流れ 〔装飾物などの滝状の〕垂れ下がり、カスケード 〔次々に起きる〕多くのもの［こと］◆【用法】cascade ofの形で用いられる。 〔電子機器などの〕カスケード［直列］接続 《化学》カスケード反応◆次々に起きる化学反応。 《コ》カスケード表示◆ウィンドウを斜めにずらしながら重ねて表示すること   https://eow.alc.co.jp/search?q=cascade\u0026amp;ref=sa から引用\n 優先順位 !important \u0026gt; インラインスタイル \u0026gt; ID セレクタ \u0026gt; クラスセレクタ・属性セレクタ \u0026gt; 要素セレクタ議事要素\n以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2017/06/19/breakpoint/",
+        "title": "breakpoint",
+        "section": "post",
+        "date" : "2017.06.19",
+        "body": "よくみるブレークポイント、ブラウザ\n\nブレークポイント よくあるブレークポイント    端末 解像度     PCサイズ 1024px以上   タブレットサイズ 768px 〜 1023px   スマートフォントサイズ 767px以下    BootStrap3のブレークポイント    端末 解像度     大型PCサイズ 1200px以上   中型PCサイズ 992px 〜 1199px   タブレットサイズ 768px 〜 9913px   スマートフォントサイズ 767px以下    よくある環境  Mobile Safari Android Google Chrome Windows IE11 Windows Firefox 最新版 Windows Google Chrome 最新版 MacOSX Safari 最新版 MacOSX Firefox 最新版 MacOSX Google Chrome 最新版  以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2017/06/17/css-properties-sequence/",
+        "title": "CSS プロパティの順序の統一",
+        "section": "post",
+        "date" : "2017.06.17",
+        "body": "CSS プロパティの順序の統一するのは大変ですが、ツールを使って統一することができます。\nCSScombというツールを紹介します。\n\nインストール\nnpm install csscomb -g  使用方法\ncsscomb 変換したパス  そのほかに以下を統一することができます。\n プロパティの：の後ろに空白を付ける セレクタの後ろに空白を付ける  毎回、コマンドで変換するのは手間なので、gulpなどのタスクランナーから使用するのがいいと思います。\n以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2017/06/17/css-design/",
+        "title": "CSS設計",
+        "section": "post",
+        "date" : "2017.06.17",
+        "body": "CSSの設計について、簡単にまとめています。\n\nカテゴライズ系 SMACSS(スマックス)  元Yahoo!のデベロッパーのJonathan Snook氏によって作られた設計方法 設計の考え方なので、ダウンロードできるフレームワークやライブラリがあるわけではない。  下記の５種類にカテゴライズされています。\n ベース レイアウト モジュール 状態(ステート) テーマ  モジュール系 命名規則系 BEM (Block Elemnet Modifier モディファイア)  要素をいずれかのに分類して命名する。 マルチクラスでも、class名は省略しない  書式  block__element block__element_modifier block_modifier block-content_modifier  ※ Modifierは、BlockまたはElementの変換した状態を表す要素です。\nMindBEMding  CSS界隈ではMindBEMdingがそのままBEMと呼ばれることが多いらしい  書式  block__element block__element\u0026ndash;modifier block\u0026ndash;modifier block-contnet\u0026ndash;modifier  スタイルガイド javaDocのように、コメントである法則にしがって記述すると、スタイルガイドを生成してくれるツールがあります。\nkss-node です。\nまだ、使ったことがないので、使用したらブログにまとめます。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2017/06/11/layout-center-2-button/",
+        "title": "中央寄せのレイアウト",
+        "section": "post",
+        "date" : "2017.06.11",
+        "body": "このように全体を中央寄せにしたいが、一番下のボタンは左寄せにするやり方を紹介します。デモ\n\nさっそくソースです。\n html\n\u0026lt;div class=\u0026quot;continer\u0026quot;\u0026gt; \u0026lt;div class=\u0026quot;section\u0026quot;\u0026gt; \u0026lt;div class=\u0026quot;row\u0026quot;\u0026gt; \u0026lt;button type=\u0026quot;button\u0026quot; name=\u0026quot;button\u0026quot;\u0026gt;ボタン１\u0026lt;/button\u0026gt; \u0026lt;button type=\u0026quot;button\u0026quot; name=\u0026quot;button\u0026quot;\u0026gt;ボタン２\u0026lt;/button\u0026gt; \u0026lt;/div\u0026gt; \u0026lt;div class=\u0026quot;row\u0026quot;\u0026gt; \u0026lt;button type=\u0026quot;button\u0026quot; name=\u0026quot;button\u0026quot;\u0026gt;ボタン３\u0026lt;/button\u0026gt; \u0026lt;button type=\u0026quot;button\u0026quot; name=\u0026quot;button\u0026quot;\u0026gt;ボタン４\u0026lt;/button\u0026gt; \u0026lt;/div\u0026gt; \u0026lt;div class=\u0026quot;row\u0026quot;\u0026gt; \u0026lt;button type=\u0026quot;button\u0026quot; name=\u0026quot;button\u0026quot;\u0026gt;ボタン５\u0026lt;/button\u0026gt; \u0026lt;/div\u0026gt; \u0026lt;/div\u0026gt; \u0026lt;/div\u0026gt;  css\n.continer { max-width: 600px; margin: auto; text-align: center; border: solid 1px black; } .section { display: inline-block; text-align: left; border: solid 1px red; }   ポイントは、次の通りです。\n外側のdiv.continer  max-width: 600px で、margin: autoで中央寄せにします。 text-align: center;を指定して、内側の要素を中央寄せにします。  内側のdiv.section  display: inline-blockを指定して、自身を中央寄せにします。 text-align: left;を指定して、内側の要素を左側にします。  補足 このやり方は、ボタンの長さが全て均等である必要があるので注意してください。\n以上です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2017/03/07/codestyle/",
+        "title": "Reactのコーディング規約で、特に気を付けたいと思ったこと！",
+        "section": "post",
+        "date" : "2017.03.07",
+        "body": "[翻訳] Airbnb React/JSX Style Guideを読んで、特に気をつけたいと思ったことを、自分のためのメモです。\n\n1ファイル = 1コンポーネント ただし以下のような、ステートレスなコンポーネントは複数はOK\nfunction Hello(props) { return \u0026lt;div\u0026gt;Hello {props.name}\u0026lt;/div\u0026gt;; } class HelloJohn extends React.Component { render() { return \u0026lt;Hello name=\u0026quot;John\u0026quot; /\u0026gt;; } } module.exports = HelloJohn;  クラス vs React.createClass vs ステートレス stateやrefsを使う場合 // good class Listing extends React.Component { // ... render() { return \u0026lt;div\u0026gt;{this.state.hello}\u0026lt;/div\u0026gt;; } }  stateやrefsを使わない場合 // good function Listing({ hello }) { return \u0026lt;div\u0026gt;{hello}\u0026lt;/div\u0026gt;; }  参考サイト 以下、参考にさせて頂きました。 ありがとうございます。\n [翻訳] Airbnb React/JSX Style Guide "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/11/24/datafile/",
+        "title": "PostgreSQLのテーブルファイルについて",
+        "section": "post",
+        "date" : "2016.11.24",
+        "body": " PostgreSQLのテーブルファイルについて、について覚書です。\nテーブルファイルの特徴  1ファイル = 最大1GB データ量の増加に伴いページ単位(8192byte)に増加していく VACUUMのメンテナンス処理で、FreeSpaceMap,VisibilityMapは作成される。 9.2以降、VisibilityMapは、「Index Only Scan」でも使用されるようになった。\n 下記の物理ファイルの説明\n 24595 テーブルファイル 24595_fsm FreeSpaceMapは、空き領域を管理する。 24595_vm VisibilityMap VACUUMを効率よくおこなうために利用される。   テーブルファイルを確認  pgbench_accountsテーブルのoidを確認\n/main/base/24582$ oid2name -d benchdb -t pgbench_accounts From database \u0026quot;benchdb\u0026quot;: Filenode Table Name ---------------------------- 24595 pgbench_accounts  物理ファイルの確認\npostgres@26f4d284871d:~/9.3/main/base/24582$ ls -l | grep 24595 -rw------- 1 postgres postgres 13434880 Jun 17 16:51 24595 -rw------- 1 postgres postgres 24576 Jun 17 16:51 24595_fsm -rw------- 1 postgres postgres 8192 Jun 17 16:51 24595_vm   "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/11/24/tablespace/",
+        "title": "PostgreSQLのテーブルファイルについて",
+        "section": "post",
+        "date" : "2016.11.24",
+        "body": " PostgreSQLのテーブルファイルについて、について覚書です。\nテーブルファイルの特徴  1ファイル = 最大1GB データ量の増加に伴いページ単位(8192byte)に増加していく VACUUMのメンテナンス処理で、FreeSpaceMap,VisibilityMapは作成される。 9.2以降、VisibilityMapは、「Index Only Scan」でも使用されるようになった。\n 下記の物理ファイルの説明\n 24595 テーブルファイル 24595_fsm FreeSpaceMapは、空き領域を管理する。 24595_vm VisibilityMap VACUUMを効率よくおこなうために利用される。   テーブルファイルを確認  pgbench_accountsテーブルのoidを確認\n/main/base/24582$ oid2name -d benchdb -t pgbench_accounts From database \u0026quot;benchdb\u0026quot;: Filenode Table Name ---------------------------- 24595 pgbench_accounts  物理ファイルの確認\npostgres@26f4d284871d:~/9.3/main/base/24582$ ls -l | grep 24595 -rw------- 1 postgres postgres 13434880 Jun 17 16:51 24595 -rw------- 1 postgres postgres 24576 Jun 17 16:51 24595_fsm -rw------- 1 postgres postgres 8192 Jun 17 16:51 24595_vm   "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/11/24/indexfile/",
+        "title": "PostgreSQLのテーブル空間について",
+        "section": "post",
+        "date" : "2016.11.24",
+        "body": "PostgreSQLのテーブル空間についての覚書です。\nデフォルトでは、$PGDATA/base配下に、物理ファイルが生成される。\nPostgreSQLではテーブル空間と呼ばれる、別のディレクトリにデータを配置する機能がある\nテーブルスペースを作成\nCREATE TABLESPACE data LOCATION '/home/postgres/data';  テーブルを作成\nCREATE TABLE store (id serial, name text) TABLESPACE data;  物理ファイルの場所を確認\n$ oid2name All databases: Oid Database Name Tablespace -------------------------------------- 24582 benchdb pg_default  $ oid2name -d benchdb -i From database \u0026quot;benchdb\u0026quot;: Filenode Table Name --------------------------------- 57358 store 57356 store_id_seq  /home/postgres/data/PG_9.3_201306121/24582/  "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/11/23/technic/",
+        "title": "PostgreSQL すぐに使える小技",
+        "section": "post",
+        "date" : "2016.11.23",
+        "body": "PostgreSQLで すぐに使える小技を紹介します。\n\nSQLの１レコードを縦に表示する方法 psqlでアクセスして、`\\x\u0026rsquo;と入力\n\\x Expanded display is on. benchdb=# select * from pgstattuple('pgbench_accounts'); -[ RECORD 1 ]------+--------- table_len | 13434880 tuple_count | 100000  SQLを1秒毎実行する。 アクセス統計情報を繰り返し表示したい場合などに便利です。\n例）時刻を1秒奥に実行する例\n$SELECT clock_timestamp(); ¥watch 1;  大量のテストデータを作成する方法 PostgreSQLで大量のテストデータを生成したい時に、generate_series(ジェネレートシリーズ)関数が便利です。\n使い方は下記のサイトが参考になります。\nPostgreSQLでテストデータを作成する\n特定テーブルのデータファイルを探す方法 ここの記事がまとめられていて、大変わかりやすいです。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/11/23/pgstattuple/",
+        "title": "pgstattuple関数の使い方",
+        "section": "post",
+        "date" : "2016.11.23",
+        "body": "pgstattuple関数の使い方を紹介します。\n\nテーブル情報の取得 select * from pgstattuple('pgbench_accounts') -[ RECORD 1 ]------+--------- table_len | 13434880 tuple_count | 100000 tuple_len | 12100000 tuple_percent | 90.06 dead_tuple_count | 0 dead_tuple_len | 0 dead_tuple_percent | 0 free_space | 188920 free_percent | 1.41  ここから読み取れる情報  table_len ファイルサイズ 約13MB tuple_count レコード数 10万件 tuple_len 行データのバイト数 約12MB １レコードのバイト数 tuple_len / tuple_count = 121byte free_percent table_len(約13MB)のうち、1.41%がフリースペースが占める割合  index情報の取得 select * from pgstatindex('pgbench_accounts_pkey'); -[ RECORD 1 ]------+-------- version | 2 tree_level | 1 index_size | 2260992 root_block_no | 3 internal_pages | 1 leaf_pages | 274 empty_pages | 0 deleted_pages | 0 avg_leaf_density | 89.84 leaf_fragmentation | 0  ここから読み取れる情報  tree_level インデックスの深さ 1段 index_size インデックスのサイズ 2260992byte ページ数 = index_size(2260992byte) / 8192byte = 276ページ root_block_no 実質ルート 3ページ目 ページの内訳　274(リーフページ) + 1(internal_pages) + 1(メタページ)　= 276ページ  注意事項  pgstattuple、pgstatindexどちらもテーブル・インデックスのフルスキャンを実行するため、本番環境で実行するときは注意が必要。 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/11/23/contrib/",
+        "title": "contribモジュールについて",
+        "section": "post",
+        "date" : "2016.11.23",
+        "body": " contribというPostgreSQLの拡張モジュールについての覚書です。\n contribution(コントリビュー)の省略 PostgreSQLの拡張モジュール デフォルトではインストールされていない。 DDLの発行でインストールが可能  \u0026lsquo;CREATE EXTENSION pgstattuple;\u0026rsquo;   データベースクラスタ内の各データベースが持つOIDを一覧表示 $ oid2name All databases: Oid Database Name Tablespace ---------------------------------- 32768 benchdb pg_default 16385 docker pg_default 12032 postgres pg_default 12027 template0 pg_default 1 template1 pg_default  テーブル空間のOIDを一覧表示 $ oid2name -s All tablespaces: Oid Tablespace Name ----------------------- 1663 pg_default 1664 pg_global  テーブル、インデックス、シーケンスのOIDを一覧表示 $ oid2name -d benchdb -i From database \u0026quot;benchdb\u0026quot;: Filenode Table Name --------------------------------- 32781 pgbench_accounts 32786 pgbench_accounts_pkey 32778 pgbench_branches 32782 pgbench_branches_pkey 32794 pgbench_history 32772 pgbench_tellers 32784 pgbench_tellers_pkey  pgstattuple インストール (9.1以降) create extension pgstattuple;  インストール済みか確認 select extname, extversion FROM pg_extension;  extname | extversion -------------+------------ plpgsql | 1.0 pgstattuple | 1.1 (2 rows)  テーブル情報の取得 select * from pgstattuple('pgbench_accounts');  インデックス情報の取得 select * from pgstatindex('pgbench_accounts_pkey');  "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/11/23/memory/",
+        "title": "PostgreSQLのメモリ＆プロセスについて",
+        "section": "post",
+        "date" : "2016.11.23",
+        "body": "PostgreSQLのメモリとプロセスについてまとめています。\n\nメモリ  共有バッファ（shared_buffers)  テーブルやインデクスのデータをメモリ上にキャッシュしておくためのバッファ 共有バッファにキャッシュすることで、デスクからの読み取り回数を減らす\n WALバッファ（wal_buffers)  WALに書き込むときに使用されるバッファ、WALはトランザクション毎に書き込まれるため、あまり大きくしすぎる必要はない\n ワークメモリ (work_mem)  ソートやハッシュ操作などで、バックエンドごとに確保されるメモリ。ワークメモリが大きいと、一時ファイルを作成せずにオンメモリでのソート処理やハッシュ操作が可能\n メンテナンスワークメモリ (maintenance_work_mem)  VACUUMやCREATE INDEX 等のメンテナンスコマンド実行時に、バックエンド毎に確保されるメモリ。メンテナンスワークメモリが大きいと効率幼駒メンテサク業ができる\nプロセス構造 PostgreSQL起動時に起動するプロセスと接続ごとに起動するプロセスに大別される\nバックグラウンド・プロセス\n   プロセス  説明     postmaster 最初に起動するプロセス。他のバックグラウンド・プロセスを起動し、クライアントからの接続要求を待ち続ける。oracleでいうリスナーみたいなやつかな？   /var/lib/pgsql-9.0/bin/postgres 親玉(リスナ)   postgres: logger process サーバログ出力   postgres: writer process データ書き出し   postgres: wal writer process WAL書き出し   postgres: autovacuum launcherprocess VACUUM実行   postgres: archiver process WALアーカイブ   postgres: stats collector process 統計情報収集   wal sender/receiver process マスタ/スタンバイサーバ間でWALの送受信を行うプロセス。PostgreSQL9.0で導入されたストリーミング・レプリケーションを実行する主なプロセス    バックエンド・プロセス\n   プロセス  説明     postgres: postgres postgres [local]idle クライアントから接続   "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/11/06/re/",
+        "title": "pythonの正規表現",
+        "section": "post",
+        "date" : "2016.11.06",
+        "body": "pythonの正規表現について整理します。\n\n正規表現を使うためには、reパッケージをインポートします\nimport re  re パッケージに以下のようなメソッドがあります。\nsourceには、検索対象の文字列が入ります。\n   メソッド 説明     match( r\u0026rsquo;正規表現の文字\u0026rsquo; , source) 先頭のマッチ検索   search( r\u0026rsquo;正規表現の文字\u0026rsquo; , source) 最初のマッチ検索   findall( r\u0026rsquo;正規表現の文字\u0026rsquo; , source) すべてのマッチの検索   split( r\u0026rsquo;正規表現の文字\u0026rsquo; , source) マッチを利用した分割   sub( r\u0026rsquo;正規表現の文字\u0026rsquo; , \u0026lsquo;置換後の文字\u0026rsquo; , source) マッチした部分の置換    上記のrは、pythonの文字列のエスケープと、正規表現のメタ文字などがぐちゃぐちゃにならないように基本的には、rをからなず付ける。\n特殊文字    パターン マッチ対象     \\d 1個の数字   \\D 1個の数字以外の文字   \\w 1個の英数字   \\W 1個の英数字以外の文字   \\s 1個の空白   \\W 1個の空白以外の文字   \\b 単語の境界線   \\B 単語の境界線以外の文字間    メタ文字    パターン マッチ対象     abc リテラルのabc   (expr) expr   expr1 exprt2   . \\n以外の任意の文字   ^ ソース文字列の先頭   $ ソース文字列の末尾   prev? 0固か1個のprev   prev* 0個以上のprev（欲張り)   prev*? 0個以上のprev（控えめ)   prev+ 1個以上のprev（欲張り)   prev+? 1個以上のprev（控えめ)   prev {m} m個の連続したprev   prev {m、ｎ} m個以上n個未満の連続したprev(欲張り)   prev {m、ｎ}? m個以上n個未満の連続したprev(控えめ)   [abc] aまたはb、またはc   [^abc] aまたはb、またはc以外   [prev(?=next)] nextが続いているprev   [prev(?!next)] nextが続いていないprev   [(?=next)prev] nextが前にあるprev   [(?!next)prev] nextが前にないprev    以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/11/05/class/",
+        "title": "pythonのクラス",
+        "section": "post",
+        "date" : "2016.11.05",
+        "body": "pythonのクラスについて\n\nクラスの定義の仕方 以下のように定義します。\nclass Person(): def __init__(self, name): self.name = name class EmailPerson(Person): def __init__(self, name, email): super().__init__(name) self.email = email def __str__(self): return \u0026quot;name:{} email:{}\u0026quot;.format(self.name, self.email) p = EmailPerson(\u0026quot;井川\u0026quot;, \u0026quot;hoge@hoge.com\u0026quot;) print(p) name:井川 email:hoge@hoge.com  getter,setterについて  Pythonは、すべての属性とメソッドが公開であり、プログラマーが行儀よくふるまうのが前提になっているので、ゲッター、セッターを書く必要はない\n と、前提としたうえで、それでも定義したい場合どうするか\n 方法1  name = property(get_name, set_name)で定義する方法\nclass Duck(): def __init__(self, name): self.__name = name def get_name(self): return self.__name def set_name(self, name): self.__name = name name = property(get_name, set_name)   方法2  @property @name.setterで定義する方法\nclass Duck(): def __init__(self, name): self.__name2 = name @property def name(self): print('inside the getter') return self.__name2 @name.setter def name(self, name): print('inside the setter') self.__name2 = name  特殊メソッド 特殊メソッドは、\u0026rsquo;__ __\u0026lsquo;で囲まれています。\nこれを定義することで、下記のようなことができます。\n比較のための特殊メソッド    メソッド 意味     eq(self, other) self == other   ne(self, other) self != other   lt(self, other) self \u0026lt; other   le(self, other) self \u0026lt;= other   ge(self, other) self \u0026gt;= other    算術計算のための特殊メソッド    メソッド 意味     add(self, other) self + other   sub(self, other) self - other   mul(self, other) self * other   floordiv(self, other) self // other   truediv(self, other) self / other   mode(self, other) self % other   pow(self, other) self ** other    参考サイト\n Python入門 - クラス  以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/08/07/itertools/",
+        "title": "itertoolsライブラリについて",
+        "section": "post",
+        "date" : "2016.08.07",
+        "body": "pyhonの標準ライブラリである。itertoolsについて紹介です。\n公式ドキュメント\n\naccumulate 1から4までの数値を、乗算していくサンプルです。\nlamdbaを指定しなければ、デフォルトでは加算します。\n コード\n\u0026gt;\u0026gt;\u0026gt; for item in itertools.accumulate(range(1,5), lambda a, b : a * b): ... print(item) ... 1 2 6 24   count 機械学習で、コードを数値に変換したときなど、以下のようにcountを使用すれば簡単にできます。\nfrom itertools import count dict(zip(['a','b'], count(1))) #=\u0026gt; # {'a': 1, 'b': 2}  以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/08/06/layout/",
+        "title": "bootstrapを使わずにレイアウトを組む",
+        "section": "post",
+        "date" : "2016.08.06",
+        "body": "bootstrapを使わずにレイアウトを組んだので紹介します。\njavascriptは一切使用しません。 全て css のみで作成します。\n完成イメージ\nデモ\n\nやりたいこと  (1) infoを横幅を固定で右寄せにして、navを画面サイズにより伸び縮みさせたい。 (2) sideを横幅を固定で左寄せにして、mainを画面サイズにより伸び縮みさせたい。 (3) sideとmainの縦幅は画面いっぱいに表示したい。 (4) mainの内容が画面の縦幅を超えた場合に、sideもそれに合わせて伸び縮みしたい。  実現方法 やりたいこと (1)と(2)を実現する方法  ポイント1\n divは縦に並びます。navとinfoは横並びにしたいので次を指定します。  display: inline-block\n ポイント２\n 伸び縮みさせたい要素のwidthを次のように指定します。  calc(100% - 固定px)\n固定px には、固定にしたい要素のpxを指定します。\n ポイント３\n 横幅をcalcで計算してピッタリにしているせいか、何故か横並びになりません。 解決方法\n 案1  横並びの右側の要素に、float: rightを指定して浮かせて、ピッタリはめ込みます。\n 案2  ぴったりだと縦に並ぶのでゲタをはかせて、ピッタリはめ込みます。\ncalc(100% - 固定px - 6px)\n6pxがゲタの部分です。\n6pxの根拠はありません。なぜか6pxでうまくいったという感じです。\n  今回は、案1を採用しています。\nやりたいこと (3)(4)を実現する方法 mainの高さがsideに影響させたいので下記のようにします。\n\u0026lt;main style=\u0026quot;display: table\u0026quot;\u0026gt; \u0026lt;div style=\u0026quot;display: table-cell\u0026quot;\u0026gt;side\u0026lt;div\u0026gt; \u0026lt;div style=\u0026quot;display: table-cell\u0026quot;\u0026gt;main\u0026lt;div\u0026gt; \u0026lt;/main\u0026gt;   このようにすることで、mainの縦幅が、sideにも影響します。まさにテーブルですね。\nわかりやすいよに、style属性で指定してますが、後述で示すコードは、classで指定しています。\n完成コード  感想 業務システムでよくあるパターンのレイアウトを、例にして説明しました。\n今後このレイアウトの場合は、これを利用してさくっとHTMLを組みたいです。\n以上です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/08/06/collections/",
+        "title": "collectionsライブラリについて",
+        "section": "post",
+        "date" : "2016.08.06",
+        "body": "pyhonの標準ライブラリである。collectionsについて紹介です。\n公式ドキュメント\n\ndefaultdict これめっちゃ便利です！！\n辞書でキーが見つからなかった場合に、defaultを指定できます。\nそんなことかと思いますが、以下のように応用が可能です。\n以下の例は、キー毎にリストを生成するサンプルです。\n コード\n\u0026gt;\u0026gt;\u0026gt; from collections import defaultdict \u0026gt;\u0026gt;\u0026gt; \u0026gt;\u0026gt;\u0026gt; list = [('A',1),('A',2),('B',3),('B',4)] \u0026gt;\u0026gt;\u0026gt; groups = defaultdict(lambda: []) \u0026gt;\u0026gt;\u0026gt; \u0026gt;\u0026gt;\u0026gt; for key, value in list: ... groups[key].append(value) ... \u0026gt;\u0026gt;\u0026gt; groups defaultdict(\u0026lt;function \u0026lt;lambda\u0026gt; at 0x10140a9d8\u0026gt;, {'A': [1, 2], 'B': [3, 4]})```   OrderedDict 辞書とリストの両方の性質をもつクラスです。(JavaでいうLinkedHashMapみたいなやつです。)\n コード\n\u0026gt;\u0026gt;\u0026gt; from collections import OrderedDict \u0026gt;\u0026gt;\u0026gt; quotes = OrderedDict([ ... ('Mce', 'A wise guy, huh?'), ... ('Larry', 'Ow!'), ... ('Curly', 'Nyuk nyuk!'), ... ]) \u0026gt;\u0026gt;\u0026gt; \u0026gt;\u0026gt;\u0026gt; for key, value in quotes.items(): ... print(key, value) ... Mce A wise guy, huh? Larry Ow! Curly Nyuk nyuk!   辞書の部分は、タプルで記述します。\n(key, value)\nCounter 配列の各要素の数を求めてくれます。\nfrom collections import Counter data = ['aaa', 'bbb', 'ccc', 'aaa', 'ddd'] counter = Counter(data) for word, cnt in counter.most_common(): print word, cnt # =\u0026gt; # aaa 2 # bbb 1 # ccc 1 # ddd 1   参考サイト Pythonで単語の数え上げとかするならCounterを使うと便利なはなし  大変勉強になりました。ありがとうございました。\n以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/31/_base/",
+        "title": "",
+        "section": "post",
+        "date" : "2016.07.31",
+        "body": "\n以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/31/generator/",
+        "title": "pythonのジェネレータについて",
+        "section": "post",
+        "date" : "2016.07.31",
+        "body": "pythonのジェネレータについて、紹介します。\n\nrange(1,10)は、ジェネレータのひとつです。\nジェネレータは、メモリに全ての数字を展開しないというのが特徴\n大きくなる可能性があるシーケンスを作りたい場合に便利に、ジェネレータ関数は便利です。\n ジェネレータ関数の例\n\u0026gt;\u0026gt;\u0026gt; def my_range(first=0, last=10, step=1): ... number = first ... while number \u0026lt; last: ... yield number ... number += step ... \u0026gt;\u0026gt;\u0026gt; \u0026gt;\u0026gt;\u0026gt; list(my_range(step=2)) [0, 2, 4, 6, 8]   値をreturnでなく、yieldで返すことを除けば通常の関数と同じです。\n注意 python2ではrangeはジェネレータではなく、xrange()がジェネレータとして用意されています。\n以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/31/decorator/",
+        "title": "pythonのデコレータについて",
+        "section": "post",
+        "date" : "2016.07.31",
+        "body": "pythonのデコレータについて紹介します。\n\nデレコータは、javaの Spring Framework のAOPだなと思いました。\nAOPについて知りたい方は、 ここを参照してください。\n デコレータのコード\n\u0026gt;\u0026gt;\u0026gt; def document_it(func): ... def new_function(*args, **kwargs): ... print('Runting function:', func.__name__) ... print('Positional arguments:', args) ... print('Keyword arguments:', kwargs) ... result = func(*args, **kwargs) ... print('Result:', result) ... return result ... return new_function   関数の実行する前と実行した後に、引数と返り値をprint()するデコレータです。\n デレコートする前のコードと実行結果\n\u0026gt;\u0026gt;\u0026gt; def add_ints(a, b): ... return a + b \u0026gt;\u0026gt;\u0026gt; add_ints(3, 5) 8  デレコートした後のコードと実行結果\n\u0026gt;\u0026gt;\u0026gt; @document_it ... def add_ints(a, b): ... return a + b ... \u0026gt;\u0026gt;\u0026gt; add_ints(3,5) Runting function: add_ints Positional arguments: (3, 5) Keyword arguments: {} Result: 8 8   アノテーションで、document_it関数を指定することでデレコートできます。\nいきなりアノテーションを使った例を示しましたが、使わない例も示します。\n アノテーションを使わずに書いた例\n\u0026gt;\u0026gt;\u0026gt; def add_ints(a, b): ... return a + b ... \u0026gt;\u0026gt;\u0026gt; cooler_add_ints = document_it(add_ints) \u0026gt;\u0026gt;\u0026gt; cooler_add_ints(3,5) Runting function: add_ints Positional arguments: (3, 5) Keyword arguments: {} Result: 8 8  つまりアノテーションは、cooler_add_ints = document_it(add_ints)の代わりです。\n  以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/30/args/",
+        "title": "pyhoneの引数について",
+        "section": "post",
+        "date" : "2016.07.30",
+        "body": "pythonの引数について説明します。\n\n関数を定義する側は、こんな感じ\n 特に変わったことはありません。\ndef menu(wine, entree, dessert): print(wine, entree, dessert)   ですが、呼び出す側では色々な呼び出し方があります。\n位置引数 これが一般的なパターンですね。\n 引数の位置を意識して、値を渡す方法です。\n\u0026gt;\u0026gt;\u0026gt; menu('chardonnay', 'chicken', 'cake') chardonnay chicken cake   キーワード引数  キーワードで指定するので、順番は気にしなくていいです。\n\u0026gt;\u0026gt;\u0026gt; menu(dessert='cake', entree='chicken', wine='chardonnay') chardonnay chicken cake   デフォルト値の指定  呼び出す際に指定がなかった場合に、採用されるデフォルト値を指摘できます。\n\u0026gt;\u0026gt;\u0026gt; def menu(wine, entree, dessert='pudding'): ... print(wine, entree, dessert) \u0026gt;\u0026gt;\u0026gt; menu('chardonnay', 'chicken') chardonnay chicken pudding   注意 デフォルト値の指定は、引数の最後にする必要があります。\n 途中にデフォルト値を指定するとエラーになります。\n\u0026gt;\u0026gt;\u0026gt; def menu(wine, entree='chicken', dessert): ... print(wine, entree, dessert) ... File \u0026quot;\u0026lt;stdin\u0026gt;\u0026quot;, line 1 SyntaxError: non-default argument follows default argument   *による位置引数のタプル化  *argsで定義すれば、タプルとして引数を取得できます。\n\u0026gt;\u0026gt;\u0026gt; def print_args(*args): ... print('Positional argument tuple:', args)   *argsを指定するのが、Pythonコミュニティの一般的な慣習らしいです。\n 実行結果\n\u0026gt;\u0026gt;\u0026gt; print_args() Positional argument tuple: () \u0026gt;\u0026gt;\u0026gt; \u0026gt;\u0026gt;\u0026gt; print_args(3, 2, 1, 'wait!', 'uh...') Positional argument tuple: (3, 2, 1, 'wait!', 'uh...')   **によるキーワード引数の辞書化  **wkargsで定義すれば、キーワード引数を辞書として引数を取得できます。\n\u0026gt;\u0026gt;\u0026gt; def print_kwargs(**kwargs): ... print('Keyword arguments:', kwargs)   *kwargsを指定するのが、Pythonコミュニティの一般的な慣習らしいです。\n 実行結果\n\u0026gt;\u0026gt;\u0026gt; print_kwargs() Keyword arguments: {} \u0026gt;\u0026gt;\u0026gt; \u0026gt;\u0026gt;\u0026gt; print_kwargs(wine='merlot', entree='mutton', dessert='macaroon') Keyword arguments: {'dessert': 'macaroon', 'entree': 'mutton', 'wine': 'merlot'} \u0026gt;\u0026gt;\u0026gt;  もちろん位置引数で指定するとエラーになります。\n\u0026gt;\u0026gt;\u0026gt; print_kwargs('merlot', 'mutton', dessert='macaroon') Traceback (most recent call last): File \u0026quot;\u0026lt;stdin\u0026gt;\u0026quot;, line 1, in \u0026lt;module\u0026gt; TypeError: print_kwargs() takes 0 positional arguments but 2 were given   以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/30/closure_lambda/",
+        "title": "pythonでクロージャ・ラムダ関数",
+        "section": "post",
+        "date" : "2016.07.30",
+        "body": "pythonでクロージャ・ラムダ関数について勉強しました。\n\nクロージャ クロージャの使い所がピンと着てないですが、クロージャについて説明します。\n これがクロージャ\n\u0026gt;\u0026gt;\u0026gt; def knights2(saying): ... def inner2(): ... return \u0026quot;We are the knights who say: '%s'\u0026quot; % saying ... return inner2 \u0026gt;\u0026gt;\u0026gt; \u0026gt;\u0026gt;\u0026gt; \u0026gt;\u0026gt;\u0026gt; a = knights2('igawa') \u0026gt;\u0026gt;\u0026gt; b = knights2('taiichi')  inner2は、動的に作られた関数のため、aとbではアドレスが違う！\n\u0026gt;\u0026gt;\u0026gt; a \u0026lt;function knights2.\u0026lt;locals\u0026gt;.inner2 at 0x101afba60\u0026gt; \u0026gt;\u0026gt;\u0026gt; b \u0026lt;function knights2.\u0026lt;locals\u0026gt;.inner2 at 0x101afbbf8\u0026gt;  クロージャで作った関数を実行\n\u0026gt;\u0026gt;\u0026gt; a() \u0026quot;We are the knights who say: 'igawa'\u0026quot; \u0026gt;\u0026gt;\u0026gt; b() \u0026quot;We are the knights who say: 'taiichi'\u0026quot;   inner2は、動的に作成された関数であり、どのように作成されたかを覚えている。\nこれがクロージャらしい。\nラムダ関数 GUIのコールバック関数を定義するときには、ラムダ式は役にたつとのこと。\n 関数を引数に渡して実行する例\n\u0026gt;\u0026gt;\u0026gt; def edit_story(words, func): ... for word in words: ... print(func(word))  関数部分をラムダで定義している。\n\u0026gt;\u0026gt;\u0026gt; words = ['apple','melon','strawberry'] \u0026gt;\u0026gt;\u0026gt; edit_story(words, lambda x : x + '!') apple! melon! strawberry!   以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/30/none/",
+        "title": "pythonのNoneについて",
+        "section": "post",
+        "date" : "2016.07.30",
+        "body": "pythonのNoneについて紹介します。\n\nNoneは、rubyでいうnilです、javaのnullとは違い、Noneというクラスがあるイメージ。\n厳密には違うかもです。\nNoneに対して、存在しないメソッドを実行してみました。\n\u0026gt;\u0026gt;\u0026gt; None.a() Traceback (most recent call last): File \u0026quot;\u0026lt;stdin\u0026gt;\u0026quot;, line 1, in \u0026lt;module\u0026gt; AttributeError: 'NoneType' object has no attribute 'a'  JavaならNullPointerExceptionが発生しますが\npythonなら、a()メソッドがないってエラーになります。\nNoneの判定 Noneを判定したい場合は、isを使用します。\n\u0026gt;\u0026gt;\u0026gt; None is None True  以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/30/path/",
+        "title": "pythonのpass文について",
+        "section": "post",
+        "date" : "2016.07.30",
+        "body": "pythonのpass文について、ピンとこなかったのでまとめました。\n\n関数を定義して何も処理をしないってときに、passを使うらしいです。\n\u0026gt;\u0026gt;\u0026gt; def do_nothing(): ... pass ... \u0026gt;\u0026gt;\u0026gt; do_nothing() \u0026gt;\u0026gt;\u0026gt;  んで、passを書かなかったらどうなる？\nってことで、やってみたら構文エラーになりました。\n必要なんですね。\n\u0026gt;\u0026gt;\u0026gt; def do_nothing2(): ... File \u0026quot;\u0026lt;stdin\u0026gt;\u0026quot;, line 2  例外クラスを作るときは、passを使うのは多用しそうですね。\nclass UppercaseException(Exception): pass  以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/30/interpreter/",
+        "title": "pythonのインタプリタの終了",
+        "section": "post",
+        "date" : "2016.07.30",
+        "body": "インタプリタの終了の仕方を紹介します。\n\n ショートカットキー  control + d\n以下でも可能でした。\n 別解１\n\u0026gt;\u0026gt;\u0026gt;exit()  別解２\n\u0026gt;\u0026gt;\u0026gt;quit()   以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/30/package/",
+        "title": "pythonのパッケージについて",
+        "section": "post",
+        "date" : "2016.07.30",
+        "body": "pythonのpackageの考えかたは、基本Javaと同じだと思いました。\nフォルダ階層で、パッケージの階層を表現します。\n\n フォルダ構成\n├── main.py └── sources └── aaa └── daily.py  main.py\nfrom sources.aaa import daily print('Daily forecaset:', daily.forecast())   フォルダ階層が深くても、fromに.で区切って指定すればOKです。\nfromを使用している場合、importに.を指定するとエラーになります。\nあれ 本には、各フォルダに、__init__.pyが必要ってあるけど、なくてもエラーにならない。\nなぜ？　不要なのと思い、python2で実行したらエラーになりました。\n python2での実行結果\npack$ python2 main.py Traceback (most recent call last): File \u0026quot;main.py\u0026quot;, line 1, in \u0026lt;module\u0026gt; from sources.aaa import daily ImportError: No module named sources.aaa   __init__.pyファイルを各ディレクトリに追加すると正常に実行されました。\nここで注意が必要なのは、sourcesフォルダにも__init__.pyが必要です。\nないとエラーになります。\npython3の本にも、__init__.pyが必要とあったので、python3でも作った方がいいよね。\n以上です。\n勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/25/fablab/",
+        "title": "ファブラボとっとりwest(西部)に行ってきました！！",
+        "section": "post",
+        "date" : "2016.07.25",
+        "body": "社内研修で、ファブラボとっとりwest(西部)に行ってきました！！\n\nファブラボとは  ざっくり言うと、何か作ろうぜっていう世界的なコミュニティだそうです。 詳しくは こちら を参照してください。  なぜ、ぶんぶん堂にファブラボが？ ファブラボとっとりは、ぶんぶん堂の中にあります。\nぶんぶん堂とは、山陰に店舗を構える文房具屋さんです。\n 鳥取県がファブラボを支援しており。ぶんぶん堂の一部スペースを借りて運営しているそうです。 今年から、ファブラボとっとりwest(西部)は鳥取県から米子市の管理に移ったそうです。 ファブラボとっとりwest(西部)は、ぶんぶん堂に入って左奥のスペースにありました。 フロアが別れているわけではないので、とても入りやすいです。  スタッフの方々 研修では３人の方に支援して頂きました。\n 鳥取県の職員さん ぶんぶん堂の店長さん ぶんぶん堂の店員さん  お忙しいところ本当にありがとうございました。\nやったこと レーザー加工機 これを使って会員証をつくりました。板にレーザを焼き付けて彫ったり、切ったりできます。\n素材(板)は、ぶんぶん堂や、フォブラボ内でも購入できます。\n今後利用する場合は、素材を購入する必要があります。できた会員証はこんな感じです。\nレーザー加工機の使い方  Illustratorを使って編集します。 プリンタで印刷するように、レーザー加工機を選んでプリントすればOKです。  その他  会員証は手書きのイラストでもOKだそうです。 私は事前に用意しておいた画像を渡して、全部お任せで作って頂きました。 Illustratorを使いこなせれば、プリンタ感覚でレーザー加工機は手軽に使えそうです。  3Dプリンタ 3Dプリンタの材料費は、なんと無料だそうです。ありがたいことです。\n今回はLEGOブロックに自分のWebサイトのURLを埋め込み、ノベルティグッズを作成することにしました。\nLEGOブロックの３Dの設計図を、 ここ からダウンロードしました。\n3Dプリンタの使い方  123 デザインを自分のパソコンにインストールします。123 デザインはフリーのソフトです。 123 デザインを使ってデザインします。  設計に空洞がある場合に支えが必要、自動で支えを追加してくれるソフトmeshmixerで設計に支えを追加します。  3Dプリンタで出力する向きを考える必要があります。 今回はポチを下にして出力したので、ポチとポチの間に支えを追加しています。  3で出力したファイルを輪切りにするソフトslicer(slic3r)で輪切りします。3Dプリンタに転送していざ出力です。  3と4の作業は、県の職員さんにやって頂きました。色々パラメータがあり微調整が大変そうでした。\n仕上がり 表はこんな感じです。\n出力対象が小さいためポチとポチの間の支えが潰れてしまいました。\n出力する対象が小さいと、難しいようです。色々試行錯誤すれば綺麗に出力できるそうです。\n裏は綺麗です。\n本物のLEGOブロックに付きました！！　パチパチ\n3Dスキャナー  実物をみることはできませんでした。 手で持って自分で３Dスキャンするタイプ  そこまで精度はよくないらしい。  ３Dスキャンしたい被写体を、色々な角度から写真をとり、その写真から３Dスキャンできるフリーのソフトがあるらしい、そちらの方が精度が良いとのこと。  今後の利用について  ふらっと行っても常駐してないので、事前に予約してほしいとのこと。 ある程度は、ぶんぶん堂の店員さんが対応してくれるとのこと。 ただ、ぶんぶん堂の店員さんは通常業務があるので、そこまでガッツリ対応はしてもらない。 ９月からファブラボ専属のスタッフが配属されるとのこと。  ファブラボで教えてもらった情報 123 デザイン以外にも、設計するソフトはあるようです。\n 無料  人形(CG)  blender  建築・機会(CAD)  fusion-360   有料  人形(CG)  maya Zブラシ(スカルプ系)    補足 スカルプ系とは、引き伸ばしたり粘土のような感覚で設計することができるものらしいです。\n感想 3Dプリンタのほうが、レイザー加工機より利用率は高いと思っていまししたが逆でした。\nレイザー加工機は、ママさんの利用が多いとのこと、確かに3Dプリンタは設計するにもちょっとむずかしかったです。\n今回のように思ったように出力されないことも多いらしく何回も試行錯誤する必要があるようです。\nその点レーザ加工機は、３Dプリンタよりもお手軽で、利用率が高いもの納得です。\n謝辞 スタッフの方々がとても親切でした。本当にお世話になりました。\n今後機会があったら利用して行きたいです。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/21/jpa_update/",
+        "title": "JPAで特定の項目だけ更新する方法",
+        "section": "post",
+        "date" : "2016.07.21",
+        "body": "JPAで特定の項目だけ更新する方法を紹介します。\n\n経緯 大量データを更新する時に、save()メソッドを実行するとすごく時間がかかった。(13分くらい)\n更新したい項目は１つだったので、特定の更新項目だけ更新すれば早くなるのではないかと思い、下記の方法を試してみました。\n結果はまだでていませんが、早くなったらまた共有します。\n@Repository public interface OrderRepository extends JpaRepository\u0026lt;Order, Long\u0026gt; { @Modifying @Query(\u0026quot;update Order o set o.item = :itemName where o.date \u0026lt; :orderedDate\u0026quot;) int SetItemBefore(@Param(\u0026quot;orderedDate\u0026quot;)Date date, @Param(\u0026quot;itemName\u0026quot;)String newItemName); }  参考サイト  https://gist.github.com/ryo-murai/3741340#updatedelete-条件指定で複数entity  参考にさせていただきました。ありがとうございます。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/17/try_and_error/",
+        "title": "子育て ✕ 試行錯誤",
+        "section": "post",
+        "date" : "2016.07.17",
+        "body": "子育てって大変ですよね。\n我が家も長男が小学１年生になり、試行錯誤しながら子育てに奮闘中です。\n嫁と２人で子育てについて試行錯誤していることを、載せていきます。\n今まで技術的なことばかり書いていましたが、ちょっとした息抜きです。\n\nいいたいこと！  試行錯誤していること。 成功したこと。 失敗したこと。  家族構成    続柄(名前) 歳     父（私） 35歳   母    長男 6歳　(小１)   次男 3歳 (保育所)    ヒントになった本 本の内容  あの7つの習慣を子供に応用した話 やり方の説明はなし ひたすら小学校での成功例  7つの習慣  １: 主体性を発揮する ２: 目的を持って始める ３: 重要事項を優先する  ４〜７は省略\nこの本で感じた大切なこと  子供が主体的になる環境作り 徹底的な可視化  試行錯誤　その１  主体的に動く人間になってほしい。  対応  土日の予定を管理するボードを作って、子供に決めさせる。 子供が自ら決めることで、主体性が身に付くかも？  実践して感じたこと。  子供が全然乗る気じゃない。 子供が遠い遊園地とか、突拍子もないことを決めるので期待に答えられない。  うーん失敗 試行錯誤　その２  悪い習慣を小さいうちに改善したい  対応  KPTという形式で、家族会議を開いて問題点を改善してみました。  実践して感じたこと。  子供が自分の意見をいうのがよい！ 家族で話す時間をつくるのはいい！ でも子供が自由で続けるのが大変 結局、言い続けなければ改善されない  継続が難しいので微妙 試行錯誤　その３  最近感じている問題  小学校の宿題にとりかかるのが遅い 家のお仕事をするのに、やらされている感がある 計画性がない   対応  タスクボードをつくる。 今日やるべきことを、可視化することで、子供がやる気になる。  タスクボード(1\u0026frasl;5)  やるべきことをマグネットに書き出して、冷蔵庫の扉に貼り付けておく。 白いマグネットは、私と嫁のタスクです。   タスクボード(2\u0026frasl;5)  今日することを決めて、すること欄へ移す。   タスクボード(3\u0026frasl;5)  おわったら、おわった欄へ移す。 {:relative_width=\u0026ldquo;80\u0026rdquo;}  タスクボード(4\u0026frasl;5)  すべて終わったらこんな感じ {:relative_width=\u0026ldquo;80\u0026rdquo;}  タスクボード(5\u0026frasl;5)  できたところにスタンプを押して、紙に記録を残します。 42週続いてます！ {:relative_width=\u0026ldquo;80\u0026rdquo;}  実践して感じたこと。  帰ってすぐ計画を立てれるようになった。 家のお仕事を主体的にするようになった。 計画をたて、実行するまでがまだ長い。  とりあえず成功  家のお仕事を、嫌がらず自分からやるようになりました。 タスクボード是非オススメです。 冷蔵庫にタスクを書いたマグネットを貼り付けてます。冷蔵庫の前のスペースって大事ですね！  以上です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/17/boot_camp/",
+        "title": "機械学習Bootcampに参加したときのメモ",
+        "section": "post",
+        "date" : "2016.07.17",
+        "body": "2泊3日で機械学習を学ぶ合宿に参加してきました。 python、機械学習を全くしらないところから参加して 最後にはkaggleにチャレンジするところまで辿りつけました。\n講師の先生の話が大変わかりやすかったお陰です。本当にありがとうございました。\nほとんど自分にしかわかりませんが、合宿中にメモしたことをUPします。\n\n 講師：大塚誠 北海道釧路市出身  1日目 昼食のカレーが、服につくという失態をしてしまい。 どんよりした気持ちのまま合宿スタートです。\n1日目は、scikit-learnの基本について学びました。\n合宿のゴール  scikit-learn(サイキットラーン)が使えるようになる。  scikit-learn = デファクトスタンダード   scikit-learn  Pythonの機械学習用ライブラリ  機械学習とは？ 既存のデータの法則性を数理モデルに学習させ、 未知のデータに渡して学習結果を汎化させるための枠組み\n機械学習の要素  既存のデータ 予測の良さを測る定規 学習アルゴリズム 予測モデル　←　これをつくることが目的 未知のデータ  モデルとは  モデル＝関数（数式） モデルの複雑さ  パラメータの複雑さ　＝　調整できるノブの数 パラメータ１つ  y = a0 = f(x:a0)  パラメータ２つ  y = a0 + a1X = f(x:a0,a1) ↑切片　↑傾き  パラメータ3つ  y=a0+a1x + a2x2=f(x:q0,q11,a2)    モデルの種類  多項式モデル  パラメータは無限に増やせる オーバフィッテイング 複雑にフットさせすぎる   バイアス・バリアンストレードオフ  バイアスとバリアンスが交わるところを狙うべし バイアス(制約が強い)  パラメータを増やすと、バイアス（制約）はへる。 パラメータの数がおおいと、データの話を聞き過ぎる  バリアンス（散らばり）     単純 複雑     アンダーフィッティング オーバーフィッティング    機械学習の３本柱 問題設定により、３つ別れれる。\n教師あり学習（ほとんどがコレ）95%  分類 ものが、売れるか？売れないか？　連続しないやつ 回帰 出力が連続しており、グラフで表せる。  教師なし学習 4%  分布推定  分布データの散らばりを予測する。 取れた魚からサンプルがほしいのではなくてい、この近海の海のサンプルがほしい\n クラスタリング  分布推定ができれば、クラスタリングはできる。 山の数を数えればいいじゃん。\n 次元圧縮  山の高さを示す。等高線ににている。（３次元になる） 重さ・長さの２次元だったら、１次元にしてもいいじゃんって感じ\n 異常検知  強化学習 1%  バンディット 強化学習 コンピュータ動詞で戦わせて、学習させる。 逆強化学習  scikit-learnのサイトトップページのサマリ  分類 回帰 クラスタリング 次元圧縮 モデル選択 前処理  K分割交差検証  分割の目安  K=3 で広く浅くチェックして K=5 そこそこ正確にしたい場合 K=10　ホントに正確にしたい場合   講師の先生のおすすめの資料  データサイエンティストのいろは  シバタアキラさんの資料(p.21〜)  機械学習コンペションにおける予測モデル手法  予測モデルの取出し方 modleをシリアライズして他でつかう。 modleの中に定規と学習アルゴリズム、予測モデルが入っている。\npythonが人気の理由  numpy があるからpythonは人気、行列がとくい！！ しかも裏ではC言語で動いているので早い  jupyter notebook のショートカット  shift + tab shift + tab X 2 でメソッドの詳細を出してくれる  マジックコマンド　jupyterに効くコード %matplotlib inline 上記を書くと、\u0026rsquo;matplotlib.pyplot\u0026rsquo;で図が表示できる。\nplotの構成について fig,ax = plt.subplots(figsize=(6,6))   fig(フィグ) = ウィンドウ ax(アクシス) = divみたいなやつ  ax.scatter   すかったー ２次元関数？  ↓　axis 0 → axis 1\nX_train, X_test, y_train, y_test = cross_validation.train_test_split(X,y,test_size=.2, random_state=42)   random_state を指定すると常に同じ値がかえってくる。 データはかならずシャッフルすべき random_state 42 の理由  銀河ヒッチハイクガイド　からきている   モデル選択 ２つの意味がある\n モデルを選ぶ\n Decision Tree Random Foresetの木が１本だけのバージョン Random Foreset  ハイパーパラメータを調整する。\n  Pandas  なんでも数値にしてくれる　あるじゃん！  モデルアンサンブルによる予測  複数のモデルの評価を合わせて予測モデルをつくるとよい。  ２日目 2日目は、1日目の復習と、pandasについて勉強し 午後からはkaggleにチャレンジしました。\nPandas のトピックス  DataFrame  表  Series\n 列  行（横を取る）\ndf.iloc[1,:]  列（縦を取る）\ndf.ix[\u0026quot;Japan\u0026quot;]  平均はmean ミーン\n pandasは、StringをObjectとして表記する。\n  データフレーム  欠損値を削除  df.dropna  pandas の 参考資料  10分でパンダスを学ぶ 10分でパンダスを学ぶ　日本語 チートシート よくつかう文法  機械学習コンペティションにおける予測モデリング手法の傾向 資料\n上記の資料がとてもわかりやすいということで、この資料を参考に１日目の講義の復習を行いました。\n 特徴設計・特徴選択  なんのカラムを使うか  予測モデルの学習・チューニング  サイキットラーン  予測結果出力   ロジスティック回帰の回帰は回帰の回帰じゃない。分類を示す。\n 教師あり\n 分類  サポートベクタマシン（SVM）  特徴 デープラーニングのまえに流行っていた。 すごいきれいにできている。 非線形分類モデルを効率気に行う。 自乗が入った瞬間に非線形 選択するときの判断材料 線形じゃないよね。非線形 なんか丸い感じがする。 カーネル gaussian kernal = rvf  ランダムフォレスト (デフォルト１０この木)  特徴 予測モデルは人間が、みてもわかる。 決定きだから 複数の決定機を学習 その際、入力例・変数の部分集合をランダムに選択 決定機の予測結果の平均値を最終出力とする 選択するときの判断材料 非線形 枠に張り付いて、分類する。  勾配(コウバイ)ブースティング（グレイデントブースティング）（デフォルト＝100の木）  ランダムフォレスト　＋　勾配ブースティング ソフトウィエア：XGBoost 多数のコンペティションで良い成績 これがでデファクトスタンダード  ディープニューラルネットワーク(DNN)  多数の中間層の導入により複雑なおモデルを表現する TensorFlow(テンサフロー) がシェアNo１ Theano(セアノ) PythonでGPUを使うときにつかう。 Nビディアがトップになった。 Chainer(チェイナー) 日本がつくった。 keras(ケラス) セアノを使いやすくしたラッパー 最近日本でも人気がでてきた。 tensorFowとTheanoを使える ニューラルネットワークデモ   最近はやっている、ハイパーパラメータの調整　ベイス最適化\n まだサイキットラーンには実装されてない。 ガウシアンプロセス  特徴設計 １つひつの数値の意味が小さいのは、ディープランニングがとくい、（画像とか） 魚の長さや重さは、思い意味をもつので、ディープランニングは不得意\n データを過酷しやすい特徴を作り出す\n 良い特徴が明示的に与えられているとは限らない Kaggleのトップランカーは、多くの時間がを特徴設計にかけている  様ざなま表現を入力\n 文章での例：文字数、単語数、カンマの数、etc. 日付での例:年、月、曜日、祝日、etc.  特徴を組み合わせる：\n 特徴選択\n 特徴を選択して、もっともよい評価を導く\n 組み合わせてもOK\n   カテゴリの仕方  One-hot encodding  機械学習するには文字列データはだめ必ず、数値に変換する必要がある。\n犬、猫、馬とかすくなかったら、項目を追加して、1,0に変換する方法もある。\n   isDoc isCat     0 1   1 0     One-hot encodding のコード\ndum = pd.get_dummies(df_train[\u0026quot;Sex\u0026quot;])  大量データの場合は、出現率を変換するなど\n is_rareを作ってもいいね。\n  matplotlib  matplotlibは低レベル seaborn(シーボーン)、可視化用のライブラリよくあるある分析をできる  学んだこと  ランダムフォレストは、オーバーフィィットしやすい　（基の数、深さを調整する必要あり） 効率よく学習するために、K分割交差方は重要。 モデルに、numpy形式で渡す必要がある。 モデルに、データフレームを渡すことはできない。 欠損値は、平均値や、中央値を設定する。 特徴点をを増やすと、ハイパーパラメータの再調整がいる。 。numpy.ndarrayのデータに変換する必要がある。as_matrixでね。)  3日目 3日目はグループに分かれて機械学習の応用について、話し合い最後は各チーム毎にスライドにまとめて発表しました。\n発表内容  健康診断のデータから、病気になるかどうかを予測する。 出雲大社の付近のお店の営業時間を伸ばす。 島根に移住をする人をみつける。  定住したかどうか？のラベルを付ける良いかも   各チームの発表を聞いたときの気付き  未知のデータとトレーニングデータの特徴点は同じに考えるべき Xだけでなく、yをセットでデータを探すのが重要  2泊3日とても大変でしたが、とても楽しい時間が過ごせました。\nまた、合宿イベントがあれば参加したいです。\nではでは\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/14/bookmark/",
+        "title": "bookmarks",
+        "section": "post",
+        "date" : "2016.07.14",
+        "body": "個人的に、役に立つサイトをまとめています。\n\n機械学習  pandas チートシート pandas よくつかう文法 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/07/03/code/",
+        "title": "pythonの制御文",
+        "section": "post",
+        "date" : "2016.07.03",
+        "body": "if文と、for文についてまとめます。\n\nif文  else ifではなくelifです。rubyのelsifより１文字少ない！  注意：最後に:(コロン)付けないとエラーになります。\nif number \u0026gt; 5: print ('5より大きい') elif number \u0026lt; 5: print ('5より小さい') else print ('5と同じ'')   Falseとみなすもの  False None 0 0.0 '' (空文字) [] (空リスト) () (空タプル) {} (空辞書) set() (空集合)   for文 注意：最後に:(コロン)付けないとエラーになります。\n 1から10までをループさせる場合\n 正しい例 (Pythonっぽい)\nfor i in range(0,10) :  間違った例（Pythonでこんな構文はありません！！）\nfor i = 0 ; i \u0026lt; 10 i++ :    勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n Pythonのリストへ\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/06/30/list/",
+        "title": "Pythonのリスト",
+        "section": "post",
+        "date" : "2016.06.30",
+        "body": "リストは基本中の基本ですね。しっかり抑えておきたいところです。\n\nリストの操作 メソッドと、関数があるので要注意です！。\n   操作 メソッド 使用例     追加(最後) append() list.append('d')   取得(先頭) - list[0]   取得(最後) - list[-1]   取得(最後)+削除 pop() list.pop() オフセットの指定なければ、-1   追加(任意の場所) insert() list.insert(4,'z')   削除 del del list[2]   削除 remove() list.remove('c')   リストの結合 extend() list.extend(list2)   リストの結合 += list += list2   オフセットの取得 index() list.index('b')   要素を含むか　 in 'a' in list   個数の計算　 count() list.count('a')   文字列変換　 join() ', '.join(list)   ソート(破壊的) sort() list.sort()   ソート sorted sorted(list)   長さの取得 len len(list)    insert()で、リストのサイズを超えるオフセットを指定した場合は、一番最後に追加されます。 いけてる！\n宣言  リストは[]で囲む\n\u0026gt;\u0026gt;\u0026gt; empty_list = [ ] \u0026gt;\u0026gt;\u0026gt; list = ['a','b','c']  list()関数で、リストを生成\n\u0026gt;\u0026gt;\u0026gt; empty = list()  タプル -\u0026gt; リスト\n\u0026gt;\u0026gt;\u0026gt; a_tuple = ('a','b','c') \u0026gt;\u0026gt;\u0026gt; list(a_tuple) ['a','b','c']   要素の取り出し  オフセットを使用した参照 文字列をスライスする時と同じ感覚で扱えます。\n\u0026gt;\u0026gt;\u0026gt; list = ['a','b','c'] \u0026gt;\u0026gt;\u0026gt; list[0] 'a' \u0026gt;\u0026gt;\u0026gt; list[-1] 'c' \u0026gt;\u0026gt;\u0026gt; list[0:2] ['a','b'] \u0026gt;\u0026gt;\u0026gt; list[::2] ['a','b']  注意 データを超えるオフセットをした場合にエラーになるので注意してください。\n リストを逆順にするワザ\n\u0026gt;\u0026gt;\u0026gt; list[::-1] ['c','b','a']   リストのコピー  色々コピーの仕方があります。\n\u0026gt;\u0026gt;\u0026gt; list_copy1 = a.copy() \u0026gt;\u0026gt;\u0026gt; list_copy2 = list(a) \u0026gt;\u0026gt;\u0026gt; list_copy3 = list[:]   勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n Pythonの辞書を知る\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/06/30/dict/",
+        "title": "Pythonの辞書を知る",
+        "section": "post",
+        "date" : "2016.06.30",
+        "body": "基本中の基本ですね。しっかり抑えておきたいところです。\n\n辞書の操作 メソッドと関数があるので要注意です。\n   操作 メソッド 使用例     取得(キーがない＝例外) - dict_a['tanaka']   取得(キーがない＝None) get() dict_a.get('tanaka')   取得(キーがない＝\u0026rsquo;default\u0026rsquo;) get() dict_a.get('tanaka', 'default')   追加,変更 - dict_a['tanaka'] = 'tarou'   削除 del del dict_a['tanaka']   全削除 clear() dict_a.clear()   結合 update() dict_a.update(dict_b)   キーを含むか in 'tanaka' in dict_a   全てのキーを取得 keys() dict_a.keys()   全ての値を取得 values() dict_a.values()   全てのキーと値を取得 items() dict_a.items()    宣言  リストは{}で囲む\n\u0026gt;\u0026gt;\u0026gt; empty_dict = {} \u0026gt;\u0026gt;\u0026gt; dict = { 'igawa' : 'taiichi', 'yamada': 'tarou', 'suzuki': 'ichirou', }  dict()関数を使った宣言\n\u0026gt;\u0026gt;\u0026gt; lol = [ ['a', 'b'], ['c','d'], ['e','f']] \u0026gt;\u0026gt;\u0026gt; dict(lol)  タプルも同様\n  勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n pythonの制御文\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/06/27/tuple/",
+        "title": "Pythonのタプル、集合",
+        "section": "post",
+        "date" : "2016.06.27",
+        "body": "Pythonのタプル、集合について触れていきます。 特にタプルと集合は、Javaで扱ったことがなったので新鮮でした。そのあたりを中心にまとめます。\n\nタプル リストとほぼ同じです。イミュータブル（変更不可）という点が違います。\n宣言  カッコで囲む。 配列は[]で表しますが、タプルは()で表します。\n\u0026gt;\u0026gt;\u0026gt; tuple2 = ('a','b','c')  カッコをつけなくて、最後にカンマをつけるだけでもOK\n\u0026gt;\u0026gt;\u0026gt; tuple1 = 'a','b','c'  tuple関数で配列をタプルに変換\n\u0026gt;\u0026gt;\u0026gt; tuple(['a','b','c'])   ちょっとしたテクニック  一度に複数の変数に代入する方法\n\u0026gt;\u0026gt;\u0026gt; t = ('1', '2', '3') \u0026gt;\u0026gt;\u0026gt; a, b, c = t  変数の値を入れ替える（タプルのアンパックという手法らしい）\n\u0026gt;\u0026gt;\u0026gt; password = 'swordfish' \u0026gt;\u0026gt;\u0026gt; icecream = 'tuttifrutti' \u0026gt;\u0026gt;\u0026gt; password, icecream = icecream, password   集合 JavaのHashSetとよく似ていますが、和集合や積集合が使えるところが違います。\n宣言  空の集合を定義\n\u0026gt;\u0026gt;\u0026gt; empty_set = set() \u0026gt;\u0026gt;\u0026gt; even_numbers = {0, 2, 4, 6, 8} \u0026gt;\u0026gt;\u0026gt; odd_numbers = {1, 3, 5, 7, 9}  文字列　-\u0026gt; 集合\n\u0026gt;\u0026gt;\u0026gt; set( 'letters' ) {'r', 't', 's', 'e', 'l'}  配列　-\u0026gt; 集合 (タプルも同様)\n\u0026gt;\u0026gt;\u0026gt; set( ['Dasher', 'Dancer', 'Prancer', 'Mason-Dixon']) {'Prancer', 'Dancer', 'Dasher', 'Mason-Dixon'}   HashSetとしての使い方  sqlだと\u0026rsquo;a\u0026rsquo;が右になるのでちょっと気持ちわるい。でも英語の文法的にはこちらのほうが正しいのかな？\n\u0026gt;\u0026gt;\u0026gt; al = {'a','b','c'} \u0026gt;\u0026gt;\u0026gt; 'a' in al True \u0026gt;\u0026gt;\u0026gt; 'x' in al   集合的な使い方  積集合\n\u0026gt;\u0026gt;\u0026gt; a = {1, 2} \u0026gt;\u0026gt;\u0026gt; b = {2, 3} \u0026gt;\u0026gt;\u0026gt; a \u0026amp; b {2} \u0026gt;\u0026gt;\u0026gt; a.intersection(b) {2}  和集合\n\u0026gt;\u0026gt;\u0026gt; a | b {1, 2, 3} \u0026gt;\u0026gt;\u0026gt; a.union(b) {1, 2, 3}  差集合\n\u0026gt;\u0026gt;\u0026gt; a - b {1} \u0026gt;\u0026gt;\u0026gt; a.difference(b) {1}  排他的OR\n\u0026gt;\u0026gt;\u0026gt; a ^ b {1, 3} \u0026gt;\u0026gt;\u0026gt; a.symmetric_difference(b) {1, 3}  部分集合\n\u0026gt;\u0026gt;\u0026gt; a \u0026lt;= b False \u0026gt;\u0026gt;\u0026gt; a.issubset(b) False  真部分集合\n\u0026gt;\u0026gt;\u0026gt; a \u0026lt; b False \u0026gt;\u0026gt;\u0026gt; a \u0026lt; a False   勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n Pythonのリストへ\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/06/24/overview/",
+        "title": "Python3に挑戦!!",
+        "section": "post",
+        "date" : "2016.06.24",
+        "body": "機械学習などのライブラリなど揃っていることからPythonに興味が湧いてきました。今日からPythonの勉強を開始します。\n１人では続かないので、同僚と２人で喫茶店で読書会です。\n\n勉強に使用する本はこれです。パーフェクトPythonと迷いました、比較的新しいこちらの書籍を選択しました。\n Pythonのインタプリタ  rubyのirbのようにpythonと入力するとインタプリタが起動します。 インタプリタ上で、import thisと入力すると何やら英文が、どうやらPython哲学を簡潔に表現した自由詩らしいです。\n$ python \u0026gt;\u0026gt;\u0026gt; import this Beautiful is better than ugly. Explicit is better than implicit. Simple is better than complex. Complex is better than complicated. Flat is better than nested. Sparse is better than dense. Readability counts. Special cases aren't special enough to break the rules. Although practicality beats purity. Errors should never pass silently. Unless explicitly silenced. In the face of ambiguity, refuse the temptation to guess. There should be one-- and preferably only one --obvious way to do it. Although that way may not be obvious at first unless you're Dutch. Now is better than never. Although never is often better than *right* now. If the implementation is hard to explain, it's a bad idea. If the implementation is easy to explain, it may be a good idea. Namespaces are one honking great idea -- let's do more of those!   pythonの数値、文字列を知るへ\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/06/20/operation/",
+        "title": "運用管理",
+        "section": "post",
+        "date" : "2016.06.20",
+        "body": "ディスク容量を監視する上で、データサイズを見積もる必要があります。 それぞれの領域の特徴と見積方をご紹介します。\n\n   領域 説明     DB領域 データファイルを格納   WAL領域 WALファイルを格納   アーカイブWAL領域 アーカイブWALファイルを格納    見積もり方 DB領域  特徴  １つのWALセグメントファイルのサイズ= 16MB 循環   WAL領域  特徴  １つのWALセグメントファイルのサイズ= 16MB WALは循環します。 循環するサイクルは、`checkpoint_segmentsパラメータで制御します。  見積もり方\n16MB x (checkpoint_segments x 3 + 1)  checkpoint_segments = 3　（デフォルトサイズ）\n注意!! 上記の値を常に上回らないことが保証されているわけではありません。 それは、大量の更新があった場合に、WALセグメントファイルの容量が一時的に上記の数値を超える場合があるためです。\n  アーカイブWAL  特徴  アーカイブWAL領域がディスクフルになっても即座にPostgreSQLは停止しない WAL領域からアーカイブに失敗し続けて、WAL領域のディスクがフルになると停止する。   参考 第5回　PostgreSQL でのデータベース構築の際に必要となる物理設計のポイント\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2016/01/01/archives/",
+        "title": "python",
+        "section": "post",
+        "date" : "2016.01.01",
+        "body": "過去の記事を全てみる\n   基本1 基本2 応用     文字列、数値 クロージャ、ラムダ    正規表現 デレコータ    辞書 ジェネレータ    リスト collections    タプル、集合 itertools    if文、for文     引数     None     パッケージ class定義     標準ライブラリ  標準ライブラリ 公式ドキュメント 標準ライブラリ チュートリアル 今週のpyhonモジュール   サードパーティ  PyPI github readthedocs   "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2015/06/24/swift-wkwebview/",
+        "title": "SwiftからWKWebViewを触ってみる",
+        "section": "post",
+        "date" : "2015.06.24",
+        "body": "以下のサンプルを解説します。 手探り状態なので、 わかっていることを徐々に追加していきます。\n\n 登場人物  UIViewController WKWebView CGRect  UIViewController    プロパティ 説明     title ナビゲーションバーに表示する名前   view コントローラーに紐づくビュー           メソッド 説明     loadView    viewDidLoad 初回ロードされた時のみ呼び出される   viewWillAppear:(BOOL)animated 画面が表示される都度呼び出される    サイズや位置の指定 UIViewやそのサブクラスでサイズや位置を指定するにはCGRect、CGPoint、CGSizeクラスを使用します。 各クラス毎に、サイズおよび、位置が指定できるものが違います。\n   クラス サイズ 位置     CGRect ○︎ ○   CGPoint - ○   CGSize ○ -    凡例）○：指定必須 -：指定不可\n参考 以下を参考にさせていただきました。\n [Swift] WKWebViewを使ってみる(1) - ウェブページを表示する iPhoneアプリ開発の虎の巻 iPhone画面名称 UIViewControllerまとめ "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2014/06/22/octopress-inner-page-link/",
+        "title": "octopressでページ内リンクの作成",
+        "section": "post",
+        "date" : "2014.06.22",
+        "body": "ページ内でリンクを使ってジャンプする方法を紹介します。\n\nAAAは任意の文字を指定してください。\nリンク元\n[SublimeCodeIntel](#AAA)\nリンク先\n\u0026lt;span id=\u0026quot;AAA\u0026quot; /\u0026gt;\nもっとイケている方法があれば教えてください。 以上です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2014/03/15/googlemap-shape/",
+        "title": "GoogleMapで任意の県に色をつける方法",
+        "section": "post",
+        "date" : "2014.03.15",
+        "body": "意外と大変だったので紹介します。\n島根県を赤色で塗りつぶしました。\nこのブログ通りに進めれば、上記のイメージのようにできます。\n\n任意の県の輪郭を手書きする事は、大変なので県境の情報が入っている Shape File(シェープファイル)を利用して実現したいと思います。\n大まかな流れを説明します。\n大まかな流れ たったの４ステップでOKです。\nStep1. 任意の県のShape File(シェープファイル)を入手する。\nStep2. Shape File(シェープファイル)から、KMLファイルに変換する。\nStep3. KMLファイルを直接編集して、色、スタイルなどを指定する。\nStep4. JavaScriptでGoogleMap上に、KMLファイルを読み込む。\n用語説明  Shape File(シェープファイル)とは？\nウィキペディアから引用 シェープファイル (Shapefile) は、 他の地理情報システム(GIS)間でのデータの相互運用におけるオープン標準として用いられるファイル形式である。 例えば、井戸、川、湖などの空間要素がベクタ画像である点 (数学)、線分、多角形で示され、各要素に固有名称や温度などの任意の属性を付与できる\n KMLファイルとは？\nウィキペディアから引用 アプリケーション・プログラムにおける三次元地理空間情報の表示を管理するために開発された、XMLベースのマークアップ言語である。2008年4月にKML2.2版は、そのままOpen Geospatial Consortium, Inc (OGC) という地理情報システムのオープンソース化を目指す団体の規格にOGC KMLとして取り入れられた[1]。\n  作業開始 Step1 任意の県のShape Fileを入手する 地図データが公開されているサイト\n次をクリックしてzipファイルをダウンロードします。\nダウンロードしたファイルを解凍して、simanek.shpを取り出します。\nStep2 Shape File -\u0026gt; KML Fileに変換する Shape FileをKML Fileに変換するためには、QGISというアプリを使用します。\n次のサイトからダウンロードします。\nQGIS インストール http://www.qgis.org/ja/site/\n次をクリックします。\n自分のマシーンは、64bitのため次をクリックします。\nダウンロードしたファイルを実行して、インストールを開始します。\nとくに迷わずインストールする事が出来ました。\nShape File -\u0026gt; KML Fileに変換する QGIS Desktopを起動します。\nブラウザタブから、先ほどダウンロードした、simanek.shpファイルを開きます。\nレイヤタブから、右クリックして名前をつけて保存を選択します。\nKMLを選択してから、出力するファイル名を入力し、「OK」ボタンを押下します。\nStep3 KML Fileを直接編集する 上記で保存したKMLファイルをテキストエディタで開いて次のように編集します。\nKMLのリファレンス\n Step4 JavaScriptでGoogleMap上に、KMLファイルを読み込む 次のように、KMLファイルを読み込んでください。\nとりあえず、dropBoxに格納して、確認しています。\n以下のリンクから、下記のサンプルを動作確認することが出来ます。\n動作確認\nKMLファイルとhtmlは次のように格納しています。\nサンプルソース\n\n以上でーす！！\nおめでとうございます。 上記で作ったサンプルを動かせば最初に示した完成イメージを表示します。\n感想 今回やりたい事が、１つにまとまっているサイトが、なかなか無かったので、記事を書こうと思いました。\nGoogleMapの開発がほぼ経験のないまま、ここまで行き着くのに1日3時間くらいで、約1週間くらい費やしました。 「KMLファイルでどうやら、GoogleMap上に図形がかけるぞ」と分かってから、Shape Fileに辿り付くまでに結構苦労しました。 KML Fileを直接編集してスタイルを指定するのに、わかってしまえば簡単なことですが行き着くまでに苦しかったです。\n皆様の開発の一助になれば幸いです。\n参考サイト 以下のサイトを参考にさせて戴きました。 ありがとうございました。\n streetcar weblog 第二世紀）\n 以上です!\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2014/03/09/st3-win-ruby/",
+        "title": "SublimeText3でRubyをコーディングする際の最低限のインストール\u0026設定（Windows）",
+        "section": "post",
+        "date" : "2014.03.09",
+        "body": "RubyからExcelを操作するコードを書きたかったので、WindowsマシーンにRubyの開発環境を用意しました。 せっかくなのでインストールした時のメモを残します。\nエディタは使いやすいSublimeText3をインストールする事にしました。 プラグインはRubyをコーディングする上で必要最小限のものを厳選しました。\n\n環境 Windows7 64ビット\n今回インストールするもの  Ruby SublimeText3 SublimeText3のプラグイン\n   プラグイン名 効果     IME Support デフォルトでは日本語入力がインラインで入力できない。それを解決してくれるやつ   SublimeCodeIntel Rubyのクラス、メソッドなどshift + ctrl + spaceで入力補完してくれる。クラスの定義先、定義元のファイルへジャンプしてくれる。   SublimeLinter Rubyの文法チェックをリアルタイムでしてくれるやつ   BeautifyRuby Rubyのソースコードをフォーマットしてくれるやつ ※windowsだと改行が余分に挿入されるためインストールしないようがよいかも    その他設定 2014/05/22 追記\n  cTagというプラグインを選ばなかった理由 cTagは定義先ファイルへジャンプはしますが、入力補完はしてくれないので、プラス入力補完をしてくれるSublimeCodeIntelを選択しました。\nRubyインストール  Rubyのインストールについては、以下のサイトのMatzRubyのインストールを参考にしてください。\n Windows にいろんな Ruby をインストール(MatzRuby, IronRuby, JRuby, Topaz, mruby) 本家ダウンロードサイト   SublimeText3本体のインストール  次のリンクから、SublimeText3本体をダウンロードしてください。\n SublimeText3\n自分の環境は、Windows7 64ビット環境なので以下をダウンロードします。   インストール\nダウンロードしたファイルを実行して、インストラーを起動します。\nどんどん進めてインストールを完了してください。\n プラグインをインストールする前の準備\n SublimeText3を起動します。 メニューから　View \u0026gt; Show Console を選択 以下をコピーしてください。 (Text3専用)\nimport urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)  狭いですが画面下のテキストボックスに貼り付けてEnterを押下してください。   これでプラグインをインストールする準備が整いました。\n  IME Supportのインストール  \u0026lsquo;Ctrl+Shift+p\u0026rsquo;でPackage Controlを起動します。\n \u0026ldquo;install\u0026rdquo;と入力して、以下を選択します。\n   \u0026ldquo;IME Support\u0026rdquo;と入力して、以下を選択します。  SublimeCodeIntelのインストール  \u0026lsquo;Ctrl+Shift+p\u0026rsquo;でPackage Controlを起動します。\n \u0026ldquo;install\u0026rdquo;と入力して、以下を選択します。\n   \u0026ldquo;SublimeCodeIntel\u0026rdquo;と入力して、以下を選択します。   初期設定\n メニューから　Preferences \u0026gt; Package Settings \u0026gt; SublimeCodeIntel \u0026gt; Settings-Defaultを選択します。\n 開いたファイルの内容を全てコピーします。\n メニューから　Preferences \u0026gt; Package Settings \u0026gt; SublimeCodeIntel \u0026gt; Settings-Userを選択します。\n 2 でコピーした内容を貼り付けます。\n 次のコードをコピーします。以下の赤枠の場所に貼り付けてください。\n\u0026ldquo;Ruby\u0026rdquo;: { \u0026ldquo;ruby\u0026rdquo;: \u0026ldquo;C:\\Ruby193\\bin\\ruby\u0026rdquo;, \u0026ldquo;rubyExtraPaths\u0026rdquo;: [\u0026ldquo;C:\\Ruby193\\lib\\ruby\\gems\\1.9.1\u0026rdquo;] }  5で追記した部分を、Rubyのインストール場所に合わせて変更してください。\n※少しハマったポイント  ruby.exeまで指定するとエラーになります、rubyと指定してください。\n パスの/(バックスラッシュ)は、//と指定してください。\n    SublimeLinterのインストール  メニューから　Preferences \u0026gt; Browse Packagesを選択して、Pakagesフォルダを開きます。\n コマンドプロンプトを起動して、１で開いたPakagesフォルダを指定してカレントディレクトリを移動します。\n 次のコマンドを実行します。\ngit clone https://github.com/SublimeLinter/SublimeLinter3.git SublimeLinter gitをインストールしていない場合は、次のサイトを参考にインストールしてから、上記のコマンドを実行して下さい。\nWindowsにGit環境をインストールする\n SublimeText3を再起動します。\n \u0026lsquo;Ctrl+Shift+p\u0026rsquo;でPackage Controlを起動します。\n \u0026ldquo;install\u0026rdquo;と入力して、以下を選択します。\n \u0026ldquo;SublimeLinter-ruby\u0026rdquo;と入力して、以下を選択します。\n 初期設定\n メニューから　Preferences \u0026gt; Package Settings \u0026gt; SublimeLinter \u0026gt; Settings-Userを選択します。\n \u0026rdquo;-Ku\u0026rdquo;を追記してください。\n   BeautifyRubyのインストール  \u0026lsquo;Ctrl+Shift+p\u0026rsquo;でPackage Controlを起動します。\n \u0026ldquo;install\u0026rdquo;と入力して、以下を選択します。\n \u0026ldquo;BeautifyRuby\u0026rdquo;と入力して、以下を選択します。\n 初期設定\n メニューから　Preferences \u0026gt; Package Settings \u0026gt; BeautifyRuby \u0026gt; Settings-Userを選択します。\n 次のように環境に合わせて変更してください フォーマットすると同時に保存されるのが嫌だったのでfalseに変更しています。\n  変更前\n変更後\n  全てのプラグインをインストールしたら 念のため、SublimeText3を再起動します。\n使い方 ＆ 動作確認 IME Supportの動作確認 次のように全角の”あ”が入力できればOKです。\nSublimeCodeIntelの動作確認 次のように、Hashのメソッドを補完できればOKです。\nSublimeLinterの動作確認 次のように、クラスとメソッドの区切りを、\u0026rdquo;.(ピリオド）\u0026rdquo;ではなく、\u0026rdquo;,（カンマ）\u0026rdquo;に変更して、左側に赤●が付けばOKです。\nBeautifyRubyの動作確認 ctrl + alt + kを押下して、ソースコードがフォーマットされることを確認します。\nその他設定  インデントを整形してくれるコマンドのショートカットキーを設定\nメニューのPreferences -\u0026gt; Key Bindings - Userを選択して以下の一文を追加します。 {\u0026ldquo;keys\u0026rdquo;: [\u0026ldquo;ctrl+alt+]\u0026rdquo;], \u0026ldquo;command\u0026rdquo;: \u0026ldquo;reindent\u0026rdquo;, \u0026ldquo;args\u0026rdquo;: { \u0026ldquo;single_line\u0026rdquo;: false }}  ctrl + alt + ]でインデントが整形されます。\n使ってみて気づいたこと。 BeautifyRubyはwindowsで改行するとCRが余分につくため、うまく改行されない。\nまた、正しくフォーマットでいる回避方法がわかったら、ブログに記載しようと思います。\n以上でーす。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2014/02/20/difftool-ubuntu/",
+        "title": "GitからGUIなマージツールを起動してソースを比較し編集したい(ubuntu)",
+        "section": "post",
+        "date" : "2014.02.20",
+        "body": "windowsでは、WinMargeを使って比較する方法を紹介しました。\nubuntuでは、meldというマージツールで実現する方法を紹介します。\nwindowsでは、WinMargeを使って比較する方法\n\nUbuntu 設定手順  Meidのインストール\nsudo apt-get install meld  .gitconfigを次のように編集してください。\n[core] quotepath = false [user] name = tigawa mail = ihciiat@gmail.com email = ihciiat@gmail.com [color] ui = true #▼▼ここ以下を追加 [diff] tool = meld  Git の 1.7.11 以上がインストールされている必要があります。\nバージョンを確認して、古い場合は、最新のgitをインストールしてください。\ngit --version  インストール方法\n$ sudo add-apt-repository ppa:git-core/ppa $ sudo apt-get update $ sudo apt-get install git   実行結果  実行環境の前提\n$ git branch * gps \u0026lt;-topicBranch master \u0026lt;-masterBranch  次のコマンドを実行して、meldを起動する。\n  チェックアウト中のtopicBranchとmasterBranchを比較しています。\n git difftool -d master  以下のように起動します。左がmasterBranchで、右がチェックアウト中のtopicBranchになります。  meldから直接編集して保存し閉じてください。\n 変更ソースをコミットしてください。\ngit add . git commit -m \u0026ldquo;コメント\u0026rdquo;\n  以上です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2014/02/12/difftool/",
+        "title": "GitからWinMergeを起動してソースを比較し編集したい",
+        "section": "post",
+        "date" : "2014.02.12",
+        "body": "CUIでソースの差分を比較するのは、結構つらいのでGUIで比較及び、そのまま編集ができないか調べたところあったので紹介します。\nwindowでの設定手順と実行結果を解説します。\n\nWindows 設定手順  WinMergeのインストール  マージツールには、定番中の定番WinMergeを使用します。以下のサイトからダウンロードしてインストールしてください。\nダウンロードサイト\nインストールは、次へボタンを押してどんどん進めて下さい。とくにつまづくことはないと思います。\n c:\\Users\\ユーザ名\\.gitconfigの編集   実行結果  実行環境の前提\n$ git branch * gps \u0026lt;-topicBranch master \u0026lt;-masterBranch  次のコマンドを実行して、WinMergeを起動する。\n  チェックアウト中のtopicBranchとmasterBranchを比較しています。 git difftool -d master\n以下のように起動します。左がmasterBranchで、右がチェックアウト中のtopicBranchになります。  WinMergeから直接編集して保存しWinMergeを閉じてください。\n 変更ソースをコミットしてください。\ngit add . git commit -m \u0026quot;コメント\u0026quot;   以上でーす。\n予告 次回はubuntuでGUIなマージツールを使う方法を紹介します。\n参考サイト 以下のサイトを参考にさせて戴きました。\nありがとうございました。\n\u0026gt; いろいろ備忘録日記\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/11/06/single-mode/",
+        "title": "Ubuntuのログインパスワードを忘れた",
+        "section": "post",
+        "date" : "2013.11.06",
+        "body": "ubuntuでrootのパスワードを忘れたらどうするか\nその解決方法を教えます。\n\n手順 簡単に説明するとシングルモードでubuntuにログインして、強制的にrootユーザのパスワードを変更します。 以下のサイトの手順でrootのパスワードを変更できました。\nUbuntuのログインパスワードを忘れた場合の解決法\nおまけ ubuntuはrootでログインできないようにパスワードを設定していない事が多いです。\n次のコマンドでrootのパスワードを設定することができます。\nsudo -s  以上でーす。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/10/27/proofreading/",
+        "title": "chrome 拡張機能をリリースしました!!",
+        "section": "post",
+        "date" : "2013.10.27",
+        "body": "その名も 「proofreading」 (プルーフリーディング)\n\nあなたの書いた文章をチェックして、間違っているところを訂正します。\nWebでメール、facebook、twitter、ブログ等々で文章を書くときに役立ててください。\n\nインストール方法 Chromeウェブストアからインストールしてください。\nChromeウェブストア\n使い方 ◆STEP1 文字列を範囲選択します。 ◆STEP2 右クリックメニューから、「校正チェック」を選択します。\n◆STEP3 指摘事項がない場合は、次のように表示します。\n指摘事項がある場合は、次のように表示します。 間違っているところに、マウスポインタをおくと、訂正前の内容を表示します。\n皆様のお役に立てれば幸いです。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/10/13/chrome-extensions-message/",
+        "title": "chrome拡張機能 \u003e background.jsからcontentscript.jsにメッセージを送る方法",
+        "section": "post",
+        "date" : "2013.10.13",
+        "body": "わかる人にはわかるbackground.jsからcontentscript.jsにメッセージを送る方法を紹介します。\n簡単にやりたい事を説明します。 chromeの右クリックメニューを追加して、追加したメニューをクリックした時に、表示しているサイトのベースカラーを変更したい。\n 右クリックメニューを拡張してメニューを追加する場合は、background.jsに処理を記載します。 表示しているサイトに何か表示した場合は、contentscript.jsに処理を記載します。  background.jsから、contentscript.jsの関数は直接呼び出すことができません。その逆も同じです。\nじゃーどうすればいいのか?\n\nchrome拡張機能には、メッセージという仕組が用意されています。\nメッセージを使ってbackground.jsからcontentscript.jsの関数を呼び出すことができます。\n関数のパラメータはjson形式で渡す事ができます。\n実装の方法 簡単に実装方法を紹介します。\nメッセージを送信する側  chrome.tabs.sendRequestを実装します。 必要なデータをjson形式で渡します。 受信側からレスポンスが返った時に実行する処理をコールバック関数に記述します。  メッセージを受信する側  chrome.extension.onRequest.addListenerを実装します。 必要なデータをjson形式で受け取ります。 任意の処理を記載します。 送信側にレスポンスを返します。  必要最小限ソースと実行結果を次の載せます。\nメッセージの送信側 chrome.contextMenus.create({ \u0026quot;title\u0026quot;: \u0026quot;校正チェック\u0026quot;, \u0026quot;type\u0026quot;: \u0026quot;normal\u0026quot;, \u0026quot;contexts\u0026quot;: [\u0026quot;selection\u0026quot;], \u0026quot;onclick\u0026quot;: function(info) { chrome.tabs.getSelected(null, function(tab) { // ★現在選択中のtab.idが必要なので、getSelectedメソッドの中にsendRequestを記述する。 alert(\u0026quot;step1\u0026quot;); chrome.tabs.sendRequest(tab.id, {greeting: \u0026quot;hello\u0026quot;}, function(response) { // ここに受信側からレスポンスが返ってきた時にする処理を記述する。 alert(\u0026quot;step3 \u0026quot; + response.farewell); }); }); } });  メッセージの受信側 chrome.extension.onRequest.addListener( function(request, sender, sendResponse) { alert(\u0026quot;step2 \u0026quot; + request.greeting); //★ここに★ 表示しているサイトのベースカラーを変更する処理を記述する。 if (request.greeting == \u0026quot;hello\u0026quot;) sendResponse({farewell: \u0026quot;goodbye\u0026quot;}); else //★ここ重要★ レスポンスがない場合でも、必ず空のオブジェクトを返す。 sendResponse({}); // snub them. } );  { \u0026quot;name\u0026quot;: \u0026quot;contentsスクリプト\u0026quot;, \u0026quot;version\u0026quot;: \u0026quot;0.1\u0026quot;, \u0026quot;manifest_version\u0026quot;: 2, \u0026quot;description\u0026quot;: \u0026quot;選択中の文書の校正チェックを行うツールです。\u0026quot;, \u0026quot;permissions\u0026quot;: [ \u0026quot;tabs\u0026quot;, \u0026quot;\u0026lt;all_urls\u0026gt;\u0026quot;, \u0026quot;contextMenus\u0026quot; ], \u0026quot;icons\u0026quot;: { \u0026quot;16\u0026quot;: \u0026quot;Apply.png\u0026quot; }, \u0026quot;content_scripts\u0026quot;: [ { \u0026quot;matches\u0026quot;: [\u0026quot;\u0026lt;all_urls\u0026gt;\u0026quot;], \u0026quot;css\u0026quot;: [\u0026quot;css/custom-theme/jquery-ui-1.10.3.custom.css\u0026quot;], \u0026quot;js\u0026quot;: [\t\u0026quot;js/jquery-1.9.1.js\u0026quot;, \u0026quot;js/jquery-ui-1.10.3.custom.min.js\u0026quot;, \u0026quot;contentscript.js\u0026quot; ] } ], \u0026quot;background\u0026quot;: { \u0026quot;scripts\u0026quot;: [\u0026quot;background.js\u0026quot;] } }  実行結果 step1 step2 hello step3 goodbye  参考  Chrome Extensions API リファレンス\n 以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/10/09/webapi/",
+        "title": "Web API 導入の勘どころ",
+        "section": "post",
+        "date" : "2013.10.09",
+        "body": "Web APIはクライアント側からAjaxで呼び出した方がいいの？\nそれともサーバ側から呼び出した方がいいの？\nそんな素朴な疑問にお答えします。\n\nすばり導入するWeb APIによります。\n順を追って説明します。\nAjaxの制限 何でもできそうなAjaxですが、同一生成元ポリシー(Same-Origin Policy)という制約があります。\nこの制約があるため、簡単にはAjaxでWeb APIを呼び出す事ができません。\n一言でいうと自サーバへは通信できますが、他のサーバへは通信できません。\nAjax通信できるURL http://example.com/a.html上でJavaScriptから直接Ajax通信できるのは次のURLです。\nつまりドメインの異なるWebAPIに対してAjax通信できません!!\n   URL 通信可否 備考     http://example.com/check ○可能 http://example.comまで同じなので通信可能   http://xxxxxxxx.com/check ×不可能 ドメインが異なる   https://example.com/check ×不可能 プロトコルが異なる   http://example.com:8080 ×不可能 ポートがことなる。    じゃあどうやって、異なるドメインのWebAPIをAjaxで呼び出すのか？ WebAPI側がJSONPまたはCORS(Cross-Origin Resouce Sharing)のどちらかに対応している必要があります。\nJSONPはその名の通り、WebAPIの戻りのフォーマットがJSONである必要があります。\nWebAPIがXMLのみ対応している場合は、JSONPは諦めて下さい。\nJSONPとCORSの詳細は下記を参照してください。\n JSONP CORS  WebAPIが、JSONPにもCORSにも対応していない場合 Ajaxで異なるドメインのWebAPIを呼び出すのは諦めてください。 じゃーどうするか!!\nサーバ側からWebAPiを呼び出すようにしてください。\nクライアントからすると、常にサーバと通信するので同一生成元ポリシーには違反しません。\nおまけ リバースプロキシサーバを用意できる場合は、異なるドメインのWebAPIを呼び出す事が可能です。\n異なるドメインのWebAPIにアクセスする場合でも、リバースプロキシを経由するイメージです。\nクライアントからすると、リバースプロキシサーバとしか通信しないので、同一生成元ポリシーに違反しません。\n以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/10/02/with-select/",
+        "title": "SQL文で一時的にVIEWを使用する方法",
+        "section": "post",
+        "date" : "2013.10.02",
+        "body": "調査用のSQLを作っている時に、１つのSQLで同じ副問い合わせを何箇所も書いていたのでVIEWを作ってすっきりさせたい衝動に駆られました。 ですが調査のためにCREATE VIEWはしたくなかったので、一時的にVIEWの代わりなるものがないかググったところありました。\nそれがWITH句です。\n\nORACLE9iから、WITH句はサポートされています。\n次はサンプルになります。\nwith view01 as (SELECT id FROM tb1 WHERE id = '01' ) SELECT view01.id, tb2.id FROM tb2, view01 WHERE tb2.id = view01.id  参考 以下のサイトを参考にさせていただきました。\nありがとうございました。\n 忘れっぽいエンジニアのオラクルＳＱＬリファレンス\n 以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/29/heroku/",
+        "title": "herokuにrailsアプリを配備する",
+        "section": "post",
+        "date" : "2013.09.29",
+        "body": "railsアプリをherokuに配備する方法を紹介します。\n\n環境  ubuntu 12.04LTS Rails 3.2.14  事前準備 1.herokuにユーザ登録 以下のサイトからユーザ登録してください。\nherokuのユーザ登録サイト\n2.herokuのアプリをローカルにインストール 次のコマンドを実行してheroku toolbeltをインストールします。\n gemからインストールするより、次のコマンドでインストールするのが推奨のようです。\nwget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh  herokuツールからログインします。 ※初めの１回だけログインすれば、OKです。\nheroku auth:login #対話式にログインを行います。   配備手順 簡単なrailsのアプリを作成して、herokuへ配備するまで説明します。\n1.railsアプリの作成  railsアプリの新規作成\nrails new memoller --skip-bundle  Gemfileの編集\n  Gemfileに追記します。\ngem 'therubyracer' group :production do gem 'pg' end  ※注意\nsqlite3がherokuで有効になっているとエラーになります。\nGemfileが次のようになっていない場合は修正してください。デフォルトから変更していない場合は特に気にする必要はありません。\ngroup :development,:test do gem 'sqlite3' end   bundleインストール\nbundle install --path=vendor/bundle  scaffold\nbundle exec rails g scaffold memo title:string content:text  migrate\nbundle exec rake db:migrate  ローカルのサーバを起動\nbundle exec rails s  次のurlをクリックして、動作確認します。\nhttp://localhost:4000/memos\n  2.herokuに配備  herokuにアプリを登録します。 ※最後の引数はアプリ名です、herokuの全ユーザの中で一意にする必要があります。\nheroku create memoller  herokuにソースをアップロードします。\ngit add . git commit -m \u0026quot;first committed.\u0026quot; git push heroku master  heroku上のデータベースにテーブルを作成します。\nheroku run rake db:create heroku run rake db:migrate  ブラウザから確認します。　※なんと次のコマンドでブラウザを起動して確認できます。\nheroku apps:open   参考サイト 以下のサイトを参考にさせていただきました。\nありがとうございました。\n Railsで簡単なアプリをscaffoldで作ってHerokuにデプロイするまで\nheroku postgresのDBにローカルPCから遠隔アクセスする\nHerokuにRails 3.2.9/Bootstrapでデプロイ 最短・簡単ガイドだよ！\n 以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/28/open-shift-rails/",
+        "title": "OpenShift railsのgenerateでエラー",
+        "section": "post",
+        "date" : "2013.09.28",
+        "body": "OpenShiftでrailsプロジェクトを作成して、git cloneしてローカルにプロジェクトを取り込み\nbundle installしてrails generateコマンドを実行するとエラーになりました。\nなぜいきなり!!\nその時の回避方法をメモします。\n\n実行したコマンド bundle exec rails generate controller sentence  エラーログ ``text:log /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/execjs-1.4.0/lib/execjs/runtimes.rb:51:inautodetect\u0026rsquo;: Could not find a JavaScript runtime. See https://github.com/sstephenson/execjs for a list of available runtimes. (ExecJS::RuntimeUnavailable) from /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/execjs-1.4.0/lib/execjs.rb:5:in \u0026lt;module:ExecJS\u0026gt;' from /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/execjs-1.4.0/lib/execjs.rb:4:in\u0026rsquo; from /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/coffee-script-2.2.0/lib/coffee_script.rb:1:in require' from /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/coffee-script-2.2.0/lib/coffee_script.rb:1:in\u0026rsquo; from /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/coffee-script-2.2.0/lib/coffee-script.rb:1:in require' from /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/coffee-script-2.2.0/lib/coffee-script.rb:1:in\u0026rsquo; from /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/coffee-rails-3.2.2/lib/coffee-rails.rb:1:in require' from /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/coffee-rails-3.2.2/lib/coffee-rails.rb:1:in\u0026rsquo; from /home/igawa/.rbenv/versions/1.9.3-p362/lib/ruby/gems/1.9.1/gems/bundler-1.3.5/lib/bundler/runtime.rb:72:in require' from /home/igawa/.rbenv/versions/1.9.3-p362/lib/ruby/gems/1.9.1/gems/bundler-1.3.5/lib/bundler/runtime.rb:72:inblock (2 levels) in require\u0026rsquo; from /home/igawa/.rbenv/versions/1.9.3-p362/lib/ruby/gems/1.9.1/gems/bundler-1.3.5/lib/bundler/runtime.rb:70:in each' from /home/igawa/.rbenv/versions/1.9.3-p362/lib/ruby/gems/1.9.1/gems/bundler-1.3.5/lib/bundler/runtime.rb:70:inblock in require\u0026rsquo; from /home/igawa/.rbenv/versions/1.9.3-p362/lib/ruby/gems/1.9.1/gems/bundler-1.3.5/lib/bundler/runtime.rb:59:in each' from /home/igawa/.rbenv/versions/1.9.3-p362/lib/ruby/gems/1.9.1/gems/bundler-1.3.5/lib/bundler/runtime.rb:59:inrequire\u0026rsquo; from /home/igawa/.rbenv/versions/1.9.3-p362/lib/ruby/gems/1.9.1/gems/bundler-1.3.5/lib/bundler.rb:132:in require' from /home/igawa/repo/proofreadingchecker/config/application.rb:7:in\u0026rsquo; from /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/railties-3.2.13/lib/rails/commands.rb:24:in require' from /home/igawa/repo/proofreadingchecker/vendor/bundle/ruby/1.9.1/gems/railties-3.2.13/lib/rails/commands.rb:24:in\u0026rsquo; from script/rails:6:in require' from script/rails:6:in\u0026lsquo;\n # 対応方法 Gemfileに以下のライブラリを追加して、もう一度`bundle install`すると正常に、`generate`を実行できました。 初めからGamefileに追加してくれてもいいのにorz `Gamefile`  gem \u0026lsquo;therubyracer\u0026rsquo; ```\n以上でーす。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/28/grep/",
+        "title": "linux サブディレクトリ配下のファイルをgrepする",
+        "section": "post",
+        "date" : "2013.09.28",
+        "body": "サブディレクトリ配下のファイルをgrepする方法を紹介します。\nコマンド書式 grep -r 検索文字列 ディレクトリ  \n実行例 /etc配下で、startを含むファイルをgrepする。\ngrep -r start /etc  ※ -lをつけるとバイナリファイルを除外できる。（バイナリファイルは検索対象外にしたいから普通はつけた方がよい)\nおまけ 以下のでも同じような事が実現できます。\nfind /etc -type f -print | xargs grep hoge /dev/null  参考サイト 以下のサイト参考にさせていただきました。\nありがとうございました。\n yahoo知恵袋\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/28/rails-lib/",
+        "title": "railsの初歩 \u003e lib配下に共通部品を定義する。",
+        "section": "post",
+        "date" : "2013.09.28",
+        "body": "railsでlib配下に共通クラスを実装する方法を紹介します。 必要なファイル 以下のファイルが必要になります。\n /lib/yahoo.rb (共通クラスのソース) /config/environment.rb  yahoo.rb module Yahoo class Proofreading require 'nokogiri' def self.make(sentence) conn = Faraday.new(:url =\u0026gt; 'http://jlp.yahooapis.jp') do |builder| builder.request :url_encoded builder.response :logger builder.adapter :net_http end res = conn.get '/KouseiService/V1/kousei', { :appid =\u0026gt; \u0026quot;dj0zaiZpPTxxxxxxxxxxxxxxxxxxxxxxxxxxxxWVyc2VjcmV0Jng9NDI-\u0026quot;, :sentence =\u0026gt; sentence, } Nokogiri::XML(res.body) end end end  environment.rb `environment.rb`に次を追加します。  require 'yahoo'　#ファイル名の.rbを除いた名前を記載する。  注意事項 yahoo.rbを修正した場合は、Hotdeployしてくれません。railsを再起動する必要があります。\n以上でーす。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/28/rspce/",
+        "title": "railsの初歩 \u003e rspecのインストール",
+        "section": "post",
+        "date" : "2013.09.28",
+        "body": "今更ながらrailsにrspeceをインストール手順を紹介しまーす。\n\nインストール手順  Gemfileに以下のように追記します。   group :development, :test do gem \u0026quot;rspec\u0026quot; gem \u0026quot;rspec-rails\u0026quot; end   注意:developmentをつけないとgenerateした時にrspecの雛形が自動生成されないので注意してください。\n  rspceのライブラリのインストール\n   bundle install --path=vendor/bundle --without production   spec/spec_helper.rbの作成\n  次のコマンドでspec/spec_helper.rbを作成する。\n bundle exec rails g rspec:install   テストクラス\n  各テストクラスの先頭に次を記載する。\n require 'spec_helper'   rspecのクラスをgenerateする  senteceモデルをgenerateする。\n be rails g rspec:model sentence  参考 以下のサイトを参考にさせていただきました。\nありがとうございました。\n RSpecでRailsのテストをしてみるテスト。 Railsの自動テスト(RSpecでModelのテスト編) RSpec without Railsなspec_helper\n 以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/28/rails/",
+        "title": "railsの初歩 \u003e コントローラ名の付け方",
+        "section": "post",
+        "date" : "2013.09.28",
+        "body": "モデルに関連するコントローラと、モデルに関連しないコントローラで名前の付け方に違いがあるようなのでメモしまーす。\n\nモデルを扱うコントローラ → コントローラ名を複数形にする。  rails generate controller items  上記のコマンドを実行すると、以下のコントローラが作成される。\n   名称 例     コントローラ名 items   コントローラクラス名 ItemsController   コントローラクラスのファイル名 items_controller.rb    モデルを扱わないコントローラ → コントラー名を複数形にする必要はない。  rails generate controller item  参考 以下のサイトを参考にさせていただきました。\nありがとうございました。\n コントローラの作成と命名規則(命名規約)\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/24/chrome-plugin/",
+        "title": "chromeの拡張機能の実装方法",
+        "section": "post",
+        "date" : "2013.09.24",
+        "body": "chromeの拡張機能が意外に簡単に実装できるので、ご紹介したいと思います。\nざっくり説明するとhtmlで実装できます。\n\n用意するファイル 適当なフォルダに以下を用意してください。 - manifest.json - popup.html - icon.png (19X19)\nmanifest.jsonは、次のように拡張機能の基本的な情報を設定します。\n{ \u0026quot;name\u0026quot;: \u0026quot;ever paster\u0026quot;, //必須（適当なアプリケーション名) \u0026quot;version\u0026quot;: \u0026quot;0.1\u0026quot;, //必須(適当なバージョン） \u0026quot;manifest_version\u0026quot;: 2, //必須（お決まり） \u0026quot;description\u0026quot;: \u0026quot;evernoteで管理しているメールアドレス、ID、雛形文書等などを呼び出して、貼り付けることができます。\u0026quot;, \u0026quot;browser_action\u0026quot;: { \u0026quot;default_icon\u0026quot;: \u0026quot;icon.png\u0026quot;,　//chromeに表示するするアイコン \u0026quot;default_title\u0026quot;: \u0026quot;ever paster\u0026quot;, \u0026quot;default_popup\u0026quot;: \u0026quot;popup.html\u0026quot; //アイコンをクリックした時に表示するhtml } }  popup.htmlは、アイコンをクリックした時に、表示するhtmlです。上記のmanifest.jsonで呼び出すように定義しています。\n今回は単純にリンクを表示するだけのhtmlを用意しました。\nhtml:popup.html \u0026lt;!DOCTYPE html\u0026gt; \u0026lt;html lang=\u0026quot;ja\u0026quot;\u0026gt; \u0026lt;head\u0026gt; \u0026lt;meta charset=\u0026quot;utf-8\u0026quot;\u0026gt; \u0026lt;/head\u0026gt; \u0026lt;body\u0026gt; \u0026lt;ul\u0026gt; \u0026lt;li\u0026gt;\u0026lt;a href=\u0026quot;http://tigawa.github.io\u0026quot; target=\u0026quot;_blank\u0026quot;\u0026gt;igawa\u0026lt;/a\u0026gt;\u0026lt;/li\u0026gt; \u0026lt;li\u0026gt;\u0026lt;a href=\u0026quot;http://fukuishere.github.io\u0026quot; target=\u0026quot;_blank\u0026quot;\u0026gt;fukuda\u0026lt;/a\u0026gt;\u0026lt;/li\u0026gt; \u0026lt;/ul\u0026gt; \u0026lt;/body\u0026gt; \u0026lt;/html\u0026gt; `\n実行方法 storeで公開する方法もありますが、今回は手っ取り早くchromeで自作した拡張機能を動作させる方法を紹介します。\n chromeの設定から拡張機能を選択する   \u0026ldquo;デベロッパーモード\u0026rdquo;にチェックをつけて、\u0026rdquo;パッケージ化されていない拡張機能を読み込む\u0026rdquo;を選択します。   上記で用意したディレクトリを選択します。   ここまでで、先ほど登録した拡張機能がchromeから使えるようになります。次は実行イメージです。  どうでした？\n簡単に実装できたでしょうか？\n次回は、もう少し踏み込んだ機能を解説できたらと思います。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/17/link/",
+        "title": "別ウィンドウでa要素を起動する方法",
+        "section": "post",
+        "date" : "2013.09.17",
+        "body": "aタグをクリックした時に、現在の画面は残したまま、別ウィンドウを開く方法をご紹介します。\n\n\u0026lt;a href=\u0026quot;http://redmine.jp/tech_note/textile/\u0026quot; target=\u0026quot;_blank\u0026quot;\u0026gt;テキストの表示\u0026lt;/a\u0026gt;  以上です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/16/palro2/",
+        "title": "PALRO プログラミングコンテスト２",
+        "section": "post",
+        "date" : "2013.09.16",
+        "body": "PALROを貸し出してもらえるか確認したところOKでした。\n貸出期間は、10/20～11/20の1ヶ月間\nまた、PALROが届いたら動画などを載せたいと思います。\nお楽しみに～!!\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/16/markup/",
+        "title": "railsで軽量マークアップを実装する。",
+        "section": "post",
+        "date" : "2013.09.16",
+        "body": "railsで軽量マークアップを実装した時のメモを残します。\n次の２つについて解説します。\n- textile(テキスタイル) - markdown\n\nRubygem 次がtextile,markdownを実現するうえで、定番のgemだそうです。\n   マークアップ gem 備考     textile RedCloth redmineのwikiで使われている記法   markdown BlueCloth GitHubで使われている記法    textileの実装方法  Gemfileへ追記\n   # Textile gem \u0026quot;RedCloth\u0026quot;   bundle install\n   bundle install --path=vendor/bundle   erbの編集 次はentry.contentにtextile形式で格納されているので、表示する時に変換します。 ポイント：\u0026lt;%== %\u0026gt;でエスケープせずに、htmlをそのまま出力します。 \u0026lt;%== RedCloth.new(entry.content).to_html %\u0026gt;  markdownの実装方法  Gemfileへ追記   # Textile gem \u0026quot;bluecloth\u0026quot;   bundle install   bundle install --path=vendor/bundle   erbの編集 次はentry.contentにmarkdown形式で格納されているので、表示する時に変換します。 ポイント：\u0026lt;%== %\u0026gt;でエスケープせずに、htmlをそのまま出力します。 \u0026lt;%== BlueCloth.new(entry.content).to_html %\u0026gt;  人気のあるマークアップのgem markup_processors\n1位. Markup\n2位. Redcarpet\n3位. RedCloth\n参考サイト 以下のサイトを参考にさせて頂きました。\nありがとうございました。\nRubyで使えるMarkdownパーサー\n以上です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/10/programming-contest/",
+        "title": "2013 プログラミングコンテスト",
+        "section": "post",
+        "date" : "2013.09.10",
+        "body": "9月に入りました。\n今年も数ヶ月で終わりですね♪\nということで、今年まだ参加が可能なプログラミングコンテストを調べて一覧にしました。\nなんと、賞金が200万円のコンテストもあるんですね。\n\n   コンテスト名 賞金 応募期間 備考     Mashup Awards 9 200万円 8/30〜10/28 指定のWebAPiを利用すれば、言語は何でもOK   HSPプログラムコンテスト Windows8搭載・最新ノートパソコン 8/01〜10/31 HSPでゲーム作り   PALROプログラミングコンテスト 10万 + PALRO 8/15～11/20 c++ ロボットのプログラム   テクニカルインベンショングランプリ 100万 5/1～10/31 windows環境で動作すれば、言語は何でもOK    プログラミングの腕も磨けて、賞金も貰える言うことないですね。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/09/10/palro/",
+        "title": "PALRO プログラミングコンテスト",
+        "section": "post",
+        "date" : "2013.09.10",
+        "body": "PALROってご存知ですか？\n抜群の会話力を持ったコミュニケーションロボットだそうです。\n価格は、29万8000円\n\nそのPALROのプログラミングコンテストがあり、なんと１ヶ月間ロボットを貸し出して貰えるそうです。 言語はC++です。\n8月からコンテストは始まっているので、まだロボットが借りれるか現在問い合わせ中です。\n確認がとれたら、ご報告させて頂きたいと思います。\nこうご期待!!\n続きは、ここをクリック\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/08/19/windows-grep/",
+        "title": "windowsでgrepする",
+        "section": "post",
+        "date" : "2013.08.19",
+        "body": "windowsでgrepしたい衝動に駆られてググってみると、以下のようなコマンドがありました。\n\nwindowsでもgrepと同じような事がfindstrできるんですね。\n実行例 以下は、ファイル名にAAA.txtが含まれるものを抽出しています。\ntree /F | findstr -i AAA.txt \u0026gt; out.txt  Thanks.\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/08/13/reentrantreadwritelock/",
+        "title": "ReentrantReadWriteLock",
+        "section": "post",
+        "date" : "2013.08.13",
+        "body": "javaでsynchronizedよりロックの競合を少なくさせる方法\n\nsynchronizedを利用して読込み書込み時にロックを行うと、読込みスレッドと読込みスレッドが衝突した時に待ちが発生していましたが\nReentrantReadWriteLockは待ちが発生しません。あくまで読込みスレッドと書込みスレッドが衝突した時にだけ待ちが発生します。（書込みスレッドと書込みスレッドの衝突時でも待ちが発生します。）\nサンプル ReadLockとwriteLockを使った簡単なサンプルを作りました。\n 実行結果 [ReadLock] start [ReadLock] start [ReadLock] end [ReadLock] end [WriteLock] start [WriteLock] end [ReadLock] start [ReadLock] end  以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/08/03/map-speed/",
+        "title": "HashMapを順読込みした時の速度が気になった",
+        "section": "post",
+        "date" : "2013.08.03",
+        "body": "JavaでHashMapのキー（文字列）を先頭一致で比較しながら、順次読み込んで行くとどのくらい時間がかかるのか気になったので試してみました。\nとりあえず、5000件のデータで検証します。\n検証したソースコードと実行結果を下記に載せます。\n\n検証したソースコード  ３回実行した平均の速度 6ms  結論 6msって事は微々たるもので、気にするほどの数値じゃないですね。\n以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/08/03/map-for/",
+        "title": "JavaのMapを順次読み込む方法",
+        "section": "post",
+        "date" : "2013.08.03",
+        "body": "JavaでMapで順次読み込む方法をよく忘れるのでまとめます。\n\nソースコード  以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/08/03/atomic/",
+        "title": "アトミック変数",
+        "section": "post",
+        "date" : "2013.08.03",
+        "body": "アトミック変数とは？ java6から追加されたクラスです。\n変数の読込みと書込みの一連の処理を保証しており、複数スレッドからのアクセスに高いスループットを達成できます。\n\nアトミック変数を宣言するための主なクラス java.util.concurrent.atomicパッケージに次のクラスがあります。\n   クラス名 説明     AtomicBoolean Boolean型を扱う   AtomicInteger Integer型を扱う   AtomicLong Long型を扱う   AtomicReference オブジェクト型を扱う    以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/08/03/concurrenthashmap/",
+        "title": "並行コレクション",
+        "section": "post",
+        "date" : "2013.08.03",
+        "body": "従来の同期化コレクションは、パフォーマンスが劣化する可能性がありましたが、並行コレクションは複数スレッドから並列アクセスを前提に高いスループットを実現できます。\n\n代表的な並列コレクション    分類 クラス (実装しているインターフェイス) 特徴     Map系 java.util.concurrent.ConcurrentHashMap\n(java.util.Map)\n(java.util.concurrent.ConcurrentMap) ・マップ全体をロックせず、ロックストライピングと呼ばれる細粒度のロック方式を用いて並行処理の最適化を行っている。\n・ConcurrentHashMapが返すIteratorは、並行アクセスにおける要素の変更を許容するのでjava.util.ConcurrentModificationExceptionがスローされることはない。\n・トレードオフとして、sizeメソッドやisEmptyメソッドが返す値が近似値となる可能性がある。   List系 java.util.concurrent.CopyOnWriteArrayList\n(java.util.List) ・読込みは複数スレッドから行えるが、書込みは単一スレッドからしか行えない。\n・Copy-on-writeは書込みに対してコピーを作成する」という意味で、リストの要素に変更を加えるようなメソッド（add,set,remove）が呼び出されると、内部の要素をコピーして、コピーした要素に変更を加える。\n・要素を取得するメソッド(get)は、コピー前の要素から値を取得する。\n・コピーのオーバヘッドが大きいので大量データの更新処理には向かない =\u0026gt; Collections.synchronizedListメソッドを検討する。   Set系 java.util.concurrent.CopyOnWriteArraySet\n(java.util.Set)    Queue系 java.util.concurrent.BlockingQueue\n(java.util.Queue) キューが空の場合に要素を取り出そうとした際には、キューに要素が追加されるまで取りだし処理を待機する。    以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/08/01/gist-eclipse-plugin/",
+        "title": "EclipseからGistに登録する方法",
+        "section": "post",
+        "date" : "2013.08.01",
+        "body": "EclipseからGistに登録できるプラグインがあったら便利ですよね。\n\nググったらありました。 以下のサイトを参考にしたらできました。\n 株式会社シャノン技術ブログ\n 少しハマったこと。 エディタの右クリックメニューのGitHub \u0026gt; Create public gistからGistに登録できませんでした。\nプロジェクト・エクスプローラの右クリックメニューからGitHub \u0026gt; Create public gistをするとGistに登録できました。\nん、バグがあるのかな？\n以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/30/java5-threadpool/",
+        "title": "java5 スレッドプール",
+        "section": "post",
+        "date" : "2013.07.30",
+        "body": "java5からスレッドプールというユーティリティーが追加されました。\n今まで自分で実装していた処理なども、既にjavaが用意してくれているので使わない手はないですよね？\nということで、スレッドプールについてまとめています。\n\nExecutorServiceとは? 複数のスレッドをあらかじめ作成して待機させておき、タスクが来たら待っているスレッドにタスクを割り当てて処理を開始させる仕組みをスレッドプールと言います。\nゼロからこうした仕組みを実装するとなると、少々面倒くさいのですが、 Java では ExecutorService というものがあり、スレッドプールを簡単に利用できます。\nタスクの状態 タスクには次の状態があります。\nこの状態は不可逆で、 created から completed へと順番に変わります。\n   順番 状態 説明     1 created タスクを生成した状態   2 submitted ブロッキングキューにタスクを入れた状態   3 started タスクを実行開始した状態   4 complted タクを実行終了した状態    ExecutorServiceの種類    メソッド名 説明     Executors.newSingleThreadExecutor() １つのスレッドでタスクの処理を行います。   Executors.newFixedThreadPool() 指定した数のスレッドを作成し、タスクの処理を行います。   Executors.newCachedThreadPool() 必要に応じて自動的にスレッドを作成し、タスクの処理を行います。    「newSingleThreadExecutor」のサンプル  「newFixedThreadPool」のサンプル  「newCachedThreadPool」のサンプル  参考サイト  Executorの使い方\njava.util.concurrentパッケージ\n 以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/28/octopress-draft/",
+        "title": "octopressで特定の記事をgenerateから除外する",
+        "section": "post",
+        "date" : "2013.07.28",
+        "body": "複数記事を書いていて、１つは途中だけど、もう１つは完成して公開したい時ってありますよね。\nそんなときは、途中の記事のヘッダ部分に以下を追加してください。\n\npublished: false  rake previewでは見れますがrake gen_deployでブログに公開されません。\n使用例 --- title = octopressで下書きをする date = 2013-07-28 tags = octopress published: false ---  以上です。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/28/gist/",
+        "title": "コマンド一発でGistへソースを登録する方法",
+        "section": "post",
+        "date" : "2013.07.28",
+        "body": "今までGitHubのサイトを開いてGistに登録していました。\n調べてみるとコマンド一発で、ローカルのソースをGistに登録する方法がありました。\n\ngistコマンドを利用します。\nブログの環境 -ubuntu 12.04 LTS\n事前準備  gistをインストールしてください。   gem install gist   GitHubのユーザとパスワードを設定してください。  ※これをしないと自分のGistに登録されません\n gist --login  よく使いそうなコマンド よく使いそうなコマンドを紹介します。 - install.shをGistにpublicで登録する\n gist install.sh   install.shをGistにprivateで登録する   gist -p install.sh   Gistにコメント付きで登録する   gist -d \u0026quot;コメント\u0026quot; install.sh   Gistのファイルを更新する   #-uの後ろのNoは、新規登録した後に表示される番号を指定すればOK gist install.sh -u 6093395  おまけ Gistに登録したソースをoctopressで公開する方法 - Gistにソースを登録する\n gist jdk_install.sh https://gist.github.com/6098050 #←★(1)★   octopressの記事にGistのソースを指定する  記事に★(1)★で表示された番号を指定します。\ntext : xxxx.markdown {% raw %}{% gist 6098050 %}{% endraw %}\ngen_deployして確認すると次のように表示されます。\n 以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/27/eclipse-4-dot-3/",
+        "title": "eclipse 4.3 + ubuntu + 日本語",
+        "section": "post",
+        "date" : "2013.07.27",
+        "body": "2013年6月27日にeclipse 4.3が公開になりました。\n毎年6月に新バージョンがリリースされているんですね。\nインストール手順及び、日本語化を行います。\n\nブログのインストール環境 -ubuntu 12.04 LTS\nダウンロード 次のサイトからeclipseとpleiadesをダウンロードしてください。\neclipseのダウンロードサイト pleiadesのダウンロードサイト 事前準備 インストールする前に次のディレクトリのインストール先を決めて置く - インストールディレクトリ - /usr/local/eclipse - ワークスペースを置くディレクトリ - /home/＜ユーザ名＞/workspace\nインストール手順 1.jdkインストール\n次の順番にインストールして行く\n 2.eclipseのインストール\n cd /usr/local sudo tar xvfz ~/ダウンロード/eclipse-jee-kepler-R-linux-gtk.tar.gz  3.pleiadesのインストール\n cd /usr/local/eclipse sudo unzip /home/igawa/ダウンロード/pleiades_1.4.0.zip  4.eclipse.iniファイルの設定\n最後の一行を追加する。\n```text:/usr/local/eclipse/eclipse.ini -startup plugins/org.eclipse.equinox.launcher_1.3.0.v20130327-1440.jar \u0026ndash;launcher.library plugins/org.eclipse.equinox.launcher.gtk.linux.x86_1.1.200.v20130521-0416 -product org.eclipse.epp.package.jee.product \u0026ndash;launcher.defaultAction openFile -showsplash org.eclipse.platform \u0026ndash;launcher.XXMaxPermSize 256m \u0026ndash;launcher.defaultAction openFile \u0026ndash;launcher.appendVmargs -vmargs -Dosgi.requiredJavaVersion=1.6 -XX:MaxPermSize=256m -Xms40m -Xmx512m -javaagent:/usr/local/eclipse/plugins/jp.sourceforge.mergedoc.pleiades/pleiades.jar #←この行を追加する。\n 5..bashrcにeclipseのパスを追加する ```text:~/.bashrc export PATH=\u0026quot;/usr/local/eclipse:$PATH\u0026quot;  6.変更内容を反映\nsource .bashrc  起動方法 次のコマンドを入力すれば起動しまーす。 eclipse  参考サイト  http://www.kkaneko.com/rinkou/javaintro/linux_eclipse.html\n 以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/23/concurrent-utilies/",
+        "title": "並行処理ユーティリティー",
+        "section": "post",
+        "date" : "2013.07.23",
+        "body": "Java5から追加された並行処理ユーティリティー(Concurrent Utilities)が、結構使えそうなので概要をまとめます。\n\n概要    名称 説明 関連クラス     スレッドプール 必要なスレッドを予め生成しプールして効率よく並行処理を行う仕組みを提供する java.util.concurrent.Executors   並行コレクション 従来の同期化コレクションは、パフォーマンスが劣化する可能性があったが、並行コレクションは複数スレッドから並列アクセスを前提に高いスループットを実現できる java.util.concurrent.ConcurrentHashMap   アトミック変数 変数に対して読込みと書込みの一連の処理を保証する変数 java.util.concurrent.atomic   カウンティングセマフォ プロセスやスレッド間における同期や割り込み制御するユーティリティー群 java.util.concurrent.Semaphore    並行処理ユーティリティのパッケージ  java.util.concurrent java.util.concurrent.atomic java.util.concurrent.locks "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/20/java7-jdbc4-dot-0/",
+        "title": "JDBC4.0 ラージオブジェクト",
+        "section": "post",
+        "date" : "2013.07.20",
+        "body": "JDBC3.0ではBLOBとCLOBをサポートしていましたが、JDBC4.0ではNCLOBもサポートするようになりました。\n\nNCLOB=テキスト形式の大きなサイズのデータを扱うクラス\nLOBの格納メソッド及び、取り出しメソッド    LOB 格納メソッド 取り出しメソッド     BLOB PreparedStatement#setBinarySteam() ResultSet#getBlob()   CLOB PreparedStatement#setAsciiStream()PreparedStatement#setCharacterStream() ResultSet#getClob()   "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/20/java7-jdbc/",
+        "title": "JDBCドライバーの自動ロード",
+        "section": "post",
+        "date" : "2013.07.20",
+        "body": "JDBC 4.0からJDBCドライバを自動ロードする機能が追加されました。\nそのためJDBCドライバのロード処理を明示的に記載する必要がなくなりました。\n\nDriverManager.getConnection  上記のデータベースとの接続を確立するメソッドの呼び出しで、JDBCドライバが自動的にロードされます。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/20/java7-diamond/",
+        "title": "java7 ダイヤモンド演算子",
+        "section": "post",
+        "date" : "2013.07.20",
+        "body": "これは楽ちん、ジェネリクスの記載がjava7から簡単になります。\n\nコード java 7\nList\u0026lt;String\u0026gt; List new ArrayList\u0026lt;\u0026gt;();  java 6\nList\u0026lt;String\u0026gt; list new ArrayList\u0026lt;String\u0026gt;();  特記事項  変数の型をコンパイラーが読み取って、\u0026lt;\u0026gt;の中に展開するらしい。 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/20/java7-multi-catch/",
+        "title": "java7 マルチキャッチ",
+        "section": "post",
+        "date" : "2013.07.20",
+        "body": "java7から複数の例外を１つのcatchブロックでキャッチできるようになりました。\nこれがマルチキャッチ!!\n\nそのまんまのネーミングでわかりやすいですね。\nマルチキャッチは、バーティカルバー「|」で区切って列挙します。\nコード  特記事項  バーティカルバーで区切って列挙する順番は関係ない。 継承関係にある例外クラスは、列挙できない。 catchしたエラーオブジェクトの「e」は、列挙した例外クラスの共通のスーパクラスの変数で受け取ります。 上記のコードの「e」はExceptionの変数に入ります。 マルチキャッチでキャッチした例外パラメータは、暗黙的にfinalとして宣言されます。 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/20/bootstrap/",
+        "title": "octopressでbootstrapのデザインを適用した後にスタイルをカスタマイズする",
+        "section": "post",
+        "date" : "2013.07.20",
+        "body": "octopressでbootstrapのデザインを適用したが、記事のタイトルと本文の間に、広いマージンがあり、狭めるためにスタイルシートをカスタマイズしました。\nその時の作業を記録します。\n\n手順  次のファイルを編集します。  // Page header // ------------------------- .page-header { //★ここをコメントアウトします。★ // padding-bottom: ($baseLineHeight / 2) - 1; // margin: $baseLineHeight 0 ($baseLineHeight * 1.5); // border-bottom: 1px solid $grayLighter; }  以上で終了です。\n特記事項  octopress/sass/bootstrap/配下の*.sassファイルを変更すれば色々カスタマイズ出来そうです。 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/20/designpattern/",
+        "title": "デザインパターンの種類",
+        "section": "post",
+        "date" : "2013.07.20",
+        "body": "デザインパターンのお話\nGoF以外にもデザインパターンは、色々あるんですね。\n\n主なデザインパターンの例    パターン名 概要     GoFのデザインパターン 23種類の基本的なデザインパターン   J2EEパターン JavaEEを利用したエンタープライズアプリケーションの設計に使えるデザインパターン   アーキテクチャパターン ソフトウェアの構造（アーキテクチャ）の設計に使えるパターン   アナリストパターン ビジネス分析に使えるパターン     ITプロ/ITエンジニアのための徹底攻略 Java SE Upgrade to Programmer[1Z0-805] P56 から引用\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/20/sql/",
+        "title": "代表的なSQL規格",
+        "section": "post",
+        "date" : "2013.07.20",
+        "body": "SQLにも色々規格があり、最新版ではマルチメディア対応しているんですね。\n\n   制定年 規格名称 説明     1986 SQL86 ANSI(米国規格協会）によって制定された最初の公式規格。既存の製品が対応できるように最小限の規格のみを策定   1992 SQL92 SQLをアプリケーションの開発基盤として本格的に運用することを目指した規格   1999 SQL99 オブジェクト指向システムへ対応を目指した規格   2003 SQL:2003 XMLの対応や外部データ連携への対応を目指した規格   2008 SQL:2008 マルチメディア対応の強化を目指した規格     ITプロ/ITエンジニアのための徹底攻略 Java SE Upgrade to Programmer[1Z0-805] P86 から引用\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/18/java7-try-with-resources/",
+        "title": "java7 try-with-resources文",
+        "section": "post",
+        "date" : "2013.07.18",
+        "body": "Java7から、クローズ処理を明示的に呼び出さなくても、自動で呼び出させるようになりました。\nこれからはクローズ漏れの心配はないですね。\n\n但しこの恩恵を受けるためには、次のようにtryを記述する必要があります。\n 実行結果 ADC  特記事項  自分でクローズ処理を実装する場合は、次のインターフェースを実装する必要があります。\n java.lang.AutoCloseable java.io.Closeable  Java7から次について自動的にリソースを解放してくれるようになりました。\n InputStream OutputStream JDBC(java.sql.Connection, java.sql.Statement, java.sql.ResultSet  tryブロックで例外がスローされ、さらにcloseメソッドでも例外がスローされた場合、tryブロックの例外をcatchします。\n AutoCloseableを実装したクラスのコンストラクタでエラーになった場合は、closeメソッドは実行されません。\n try()に複数のリソースを一度に宣言できる。close処理は定義した逆順で実行されます。\n try( A a = new A(); B b = new B()){\n "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/18/java7-underscore/",
+        "title": "java7 アンダースコアを使った数値表記",
+        "section": "post",
+        "date" : "2013.07.18",
+        "body": "Java7から数値リテラルで、アンダースコアの表記が使えるよになりました。\nカンマの代わりに使えば見やすくなりますね。\n\n使用例  int i = 100_000_000;  表記ルール  リテラルの先頭と末尾には記述できない。 記号の前後には記述できない。  小数点を表すドット long型やfloat型を表すLやF 2進数を表す0b 16進数を表す0x などなど  "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/18/java7-0b/",
+        "title": "java7 ２進数のリテラル表記",
+        "section": "post",
+        "date" : "2013.07.18",
+        "body": "Java7から、２進数のリテラル表記ができるようになりました。\n\n接頭辞に「0b」もしくは、「0B」をつけます。\n0b1111111  注意事項  byte型の変数に入れる場合、0b11111111を設定するとコンパイルエラーになる。0b1111111だとOK 上記は先頭が符号ビットとして扱うかどうかで値が変わる場合、コンパイラは自動的に変換せず、コンパイルエラーが発生したためです。 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/17/java7-switch/",
+        "title": "Java7 switch文",
+        "section": "post",
+        "date" : "2013.07.17",
+        "body": "1Z0-805 Upgrade to Java SE7を受験するために、しばらくの間JavaSE7のネタをチョクチョク書き込んで行きまーす。\n\njavaSE7からswitch文に文字列が使用できるようになった。\n次のように使用します。\nソース  実行結果 A\nswitch文の条件に記述できる型  byte型 short型 int型 enum型 String型 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/13/ruby-percent-w/",
+        "title": "Ruby 配列式の%記法",
+        "section": "post",
+        "date" : "2013.07.13",
+        "body": "Rubyの%記法について、忘れやすいのでまとめてます。\n\nシングルクォートで囲んだ文字列の配列を%記法で書くとこうなります。\n%w(foo bar baz)  ダブルクォートで囲んだ文字列の配列を%記法で書くとこうなります。\n%W(foo bar baz) "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/07/13/ln-s/",
+        "title": "ディレクトリへのシンボリックリンクを作成する方法",
+        "section": "post",
+        "date" : "2013.07.13",
+        "body": "ファイルへのシンボリックリンクを作成する際に迷った事はなかったのに、ディレクトリへのシンボリックリンクの作成で迷ったので記録します。\n\nどこに迷ったか パスの最後に\u0026rdquo;/\u0026ldquo;をつけるとこ。（毎回迷っている気がします。）\n# シンボリックリンクを作りたい場所に移動 cd /home/igawa # .sshディレクトリのシンボリックリンクの作成 ln -s /home/igawa/Dropbox/.ssh/ . "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/06/15/24contest-4/",
+        "title": "24コンテストメモ",
+        "section": "post",
+        "date" : "2013.06.15",
+        "body": "24時間コンテストに参加した時の作業メモを残します。\n\nopen shift Clientのインストール sudo gem install rhc rhc setup  rails プロジェクト .gitignoreの設定 .gitignore /vendor/bundle /public/assets/* /db/schema.rb\nタイムゾーンの設定 タイムゾーンの設定\ncronのファイルから定期的に実行する curl http://www.example.com/\nbootstrap_and_overrides.css.less body { padding-top: 50px; }\nopen shift cron設定 rhc cartridge list rhc cartridge start -a lifeplus -c cron-1.4 rhc cartridge stop -a lifeplus -c cron-1.4 rhc cartridge restart -a lifeplus -c cron-1.4 rhc cartridge reload -a lifeplus -c cron-1.4 rhc cartridge status -a lifeplus -c cron-1.4 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/06/08/zeus/",
+        "title": "rails関連コマンドの実行速度を数倍速くする方法",
+        "section": "post",
+        "date" : "2013.06.08",
+        "body": "自分のノートパソコンは、SSDではないのでどうしても、railsのコマンドやRspecの実行が遅い orz\n数行のRspecの実行に、３～４秒くらいかかる。これではよい開発のリズムに乗れない。\nRspecの実行を速くする方法がないか、探したところあった。\nそれがこれ！！\n\nzeus\nまさに神のようなライブラリ\nSSDを買わなくても、よい開発のリズムに乗れる。\nどのくらい速いか、次の動画で紹介されています!!\n](http://vimeo.com/burkelibbey/zeus)\n【試した環境】 Ubuntu 13.04\n【インストール方法】 gem install zeus  【使い方】 対象のrailsアプリのフォルダに移動して、zeusのスタートコマンドを実行する。\n** これは必ず実行する必要がある。毎回端末の起動時に１回だけ実行すればOK！！ **\ncd \u0026lt;Rails.Root\u0026gt; zeus start  上記のコマンド実行後に、次のコマンドが使えるようになる。\nzeus console zeus server zeus test test/unit/igawa_test.rb zeus test spec/igawa_spec.rb zeus generate model omg zeus rake -T zeus runner omg.rb   railsを起動する時は、rails serverでなくzeus serverを実行してください。 一瞬で起動します。 Rspecを実行する時は、zeus test spec/igawa_spec.rbのように実行してください、  追加 2013/06/09  Zeus Test で スペックを実行すると 2度実行されることの解決方法が紹介されていました。 こちらを参考にしてください。  Sublime Text2からzeusを介してRspecを実行する方法 【前提】 Sublime Text2をRubyTestをインストールしておくこと。 こちらを参考にしてください\n【設定方法】  Sublime Text2から次のように設定ファイルを開く   メニュー \u0026gt; Preferences \u0026gt; Package Settings \u0026gt; RubyTest\u0026gt; Settings-User   設定ファイルに以下を貼り付ける。   { \u0026quot;run_cucumber_command\u0026quot;: \u0026quot;zeus cucumber {relative_path} --no-color\u0026quot;, \u0026quot;run_single_cucumber_command\u0026quot;: \u0026quot;zeus cucumber {relative_path}:{line_number} --no-color\u0026quot;, \u0026quot;run_rspec_command\u0026quot;: \u0026quot;zeus test {relative_path}\u0026quot;, \u0026quot;run_single_rspec_command\u0026quot;: \u0026quot;zeus test {relative_path}:{line_number}\u0026quot; }  【使い方】 こちらを参考にしてください\n以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/06/07/sublimeibus/",
+        "title": "UbuntuのSublimeText2で日本語を直接入力する",
+        "section": "post",
+        "date" : "2013.06.07",
+        "body": "今まで「InputHelper」を導入して、ctrl + shift + zでWindowを起動して日本語を入力していたので手間だった。 そんな時、SublimeIBusと運命の出会い。これはSublime Text2で直接日本語を入力できる優れも！！\n\nこれは使える。あの手間から開放される。 開発者の方々に感謝！！、感謝!!です。\n注意事項 開発者の方がアルファ版以下ですと説明されていますが、それなりに使えました。 しばらく使っていると、入力中の文字が見えなくなることがありました。\n試した環境 Ubuntu 13.04\n前提 Gitがインストール済みであること → Gitのインストールはここを参照してね♪\nインストール方法 sudo apt-get install python-xlib cd ~/.config/sublime-text-2/Packages git clone git@github.com:chikatoike/SublimeIBus.git  使い方 次のショートカットキーで日本語をON/OFFする。\n ctrl + ￥  以上\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/06/06/rspec/",
+        "title": "SublimeText2から直接RSpecを実行する方法",
+        "section": "post",
+        "date" : "2013.06.06",
+        "body": "はい、これ!!\n\u0026ldquo;Sublime Text 2 Ruby Tests\u0026rdquo;\n上記のサイトの通りインストールすればでけた！！\n\n編集時に役立つショートカットキー  プロダクトコードとテストコード画面分割で表示 「ctrl + alt + .」 プロダクトコードとテストコードの切り替え 「ctrl + .」 １画面に戻す 「ctrl + shift + 1」  実行時に役立つショートカットキー  開いているファイルのテストコードの実行 「ctrl + shift + t」 指定した箇所のテストコードの実行 「ctrl + shift + r」 テストパネルを閉じる 「ESC」 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/31/git-reset/",
+        "title": "Gitですべて修正前にリセットしたい。",
+        "section": "post",
+        "date" : "2013.05.31",
+        "body": "HEADの状態にリセットしたい。\n\nHEADの状態にワーキングツリーとインデックス、リポジトリを戻す。  git reset --hard HEAD  gitで管理されていないファイルについては、上記のコマンドでは元に戻らないので、次のコマンドでクリア  git clean -fd  特定のファイルのみリセットしたい  git reset --mixed HEAD data1 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/31/git-rm/",
+        "title": "Gitでインデックスから削除する方法",
+        "section": "post",
+        "date" : "2013.05.31",
+        "body": "git rm \u0026ndash;cached ファイル名\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/31/git-grep/",
+        "title": "Gitで特定の文字列を含むファイルを検索する",
+        "section": "post",
+        "date" : "2013.05.31",
+        "body": "git grepコマンドは、インデックスやワーキングツリーに対して文字列を検索する。\ngit grep \u0026ndash;no-index Saitama\nkantou.txt:Saitama\n正規表現で検索する。\n#Kaで始まる行を検索する git grep -e ^Ka  "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/31/git-empty/",
+        "title": "Gitで空フォルダを登録する",
+        "section": "post",
+        "date" : "2013.05.31",
+        "body": "空ディレクトリに以下のファイル名でファイルを作る。\n.gitkeep\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/30/git_shortlog/",
+        "title": "Gitで作成者毎にコミットログの統計を表示する",
+        "section": "post",
+        "date" : "2013.05.30",
+        "body": "誰が一番コミットしているのとかを調べる時に重宝しそう！！ git shortlog -s 作成者とコミット件数をサマライズする -n コミット件数の降順にソートする -e 作成者のemailアドレスを表示する  出力例\ntigawa (33): テストデータを追加 Profile.rb belong_to -\u0026gt; belongs_to に変更 テストデータを追加 テストデータ　プロファイル追加 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/30/git_install/",
+        "title": "Gitのインストール及び、初期設定",
+        "section": "post",
+        "date" : "2013.05.30",
+        "body": "Gitのインストール及び、初期設定についてまとめています。 インストール環境 Ubuntu 13.04\nインストール手順 #git本体 sudo apt-get install git #git標準のguiツール sudo apt-get install gitk sudo apt-get install git-gui  初期設定 #コミット時のユーザ名を指定 git config --global user.name ”(your name)\u0026quot; #コミット時のメールアドレスを指定 git config --global user.email \u0026quot;(your email)\u0026quot; #コンソールをカラフルにする。（おすすめ） git config --global color.ui true #マルチバイト対応 git config --global core.quotepath false "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/30/git_topic_branch/",
+        "title": "Gitのトピックブランチ開発について",
+        "section": "post",
+        "date" : "2013.05.30",
+        "body": "トピックブランチとは、簡単に説明すると、機能追加やバグ修正の単位でブランチを作って開発すること。\n具体的には、以下のような手順で行う。\n\n ローカルのmasterを最新化する。   git pull origin   トピックブランチを作成する。   git checkout -b \u0026quot;ブランチ名\u0026quot;   コミットは適当な間隔で行う。   git add . git commit -m \u0026quot;一時的なコミットメッセージ\u0026quot;　← 最後に正式なメッセージをつけるのでこの時は結構適当(※１）   リモートリポジトリにコミット   #マスタブランチに移って最新化する。 git checkout master git pull origin # トピックブランチをマージする git merge --squash \u0026quot;ブランチ名\u0026quot; ～　コンフリクトしていたら手作業でマージする。　～ # トピックブランチで行った複数のコミットを１つにまとめてコミットする。 git commit -m \u0026quot;正式なコミットメッセージ\u0026quot;  (※１)mergeする時に、「\u0026ndash;squash」をつける場合に限る。つけない場合は正式なコミットメッセージにする。_\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/30/git_status/",
+        "title": "Gitの現在の状態を確認する",
+        "section": "post",
+        "date" : "2013.05.30",
+        "body": "次のコマンドで、次回のコミットに向けた状態とファイルの状態の２つを出力する。\ngit status\n - 次回コミット時の状態\nメッセージ　| 説明\n:\u0026mdash;\u0026mdash;\u0026mdash;\u0026mdash; | :\u0026mdash;\u0026mdash;-\nOn branch master; | この状態でコミットすると、masterブランチにコミットされることを表す。\nnothing to commit;| ワークツリーとインデックスに対して変更がない場合に表示される。コミットするものがないということ。\nChanges to be committed; | ここに表示されるファイルは次回のコミット対称となる。git addコマンドでインデックスに登録したファイルやgit mergeコマンドでマージされたファイルなどが含まれる。\nChanged but not updated; | ワーキングツリーで変更されているが、その変更がインデックスに登録されていないファイルが表示される。\nUntrackde files; | ワーキングツリーに存在するがGitの管理対称となっていないファイルが表示される。\n ファイルの状態  メッセージ　| 説明\n:\u0026mdash;\u0026mdash;\u0026ndash; | :\u0026mdash;\u0026mdash;-\nnew file; | 新しくインデックスに登録されたファイル\nmodified; | ワーキングツリーやインデックスの状態から変更されている事を示す。\nrenamed; | git mvコマンドでファイルを移動したりファイル名を変更した場合に表示される。\ndeleted; | ファイルを削除した場合に表示される git rm コマンドで削除した場合には次回コミット対象となるが、直接ファイルを削除した場合は、対称とはならない\nboth modified; | マージや利ベースに失敗した場合で特に複数のブランチで変更が加えられているファイルに対して表示される。\numerged; | マージやりベースに失敗した場合で、上記のboth modified以外のときに表示される。例えば一方のブランチでは削除されているが、一方のブランチでは変更されている場合。\n次のコマンドで短縮表示が可能\n git status -sb   ## master ←チェックアウトしているブランチ名 M test0 ←１列目がMなのでChanges to be commited;でmodified M test1 ←2列目がMなのでChanges but not updated; でmodified A test2 ←１列目がAなのでChanges to be commited;でnew file; ?? test3 ←1,2列目が?なので、Untrached files; "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/27/activerecord/",
+        "title": "railsで各RDBMSの文字列連結に対応させる",
+        "section": "post",
+        "date" : "2013.05.27",
+        "body": "問題点 sqliteでは問題なく動作するのに、mysqlで実行すると検索結果が０件になる。\n問題のSQL\nSELECT \u0026quot;users\u0026quot;.* FROM \u0026quot;users\u0026quot; INNER JOIN \u0026quot;profiles\u0026quot; ON (\u0026quot;profiles\u0026quot;.\u0026quot;user_id\u0026quot; = \u0026quot;users\u0026quot;.\u0026quot;id\u0026quot;) WHERE (last_name || first_name LIKE '%井川%') ORDER BY created_at desc  \n原因 どうやらMysqlでは文字連結に「||」は使用できないらしい。\nconcatで文字連結する必要があるようだ。\nconcat( last_name, first_name ) LIKE \u0026lsquo;%井川%\u0026rsquo;\nただし、次のように変更すると、sqliteで実行するとエラーになる。 あ～困った！！\n対応内容 Mysql,sqlite,oracle,sqlServerすべてに対応するため、次のように修正してみる。\nconfig/initializers/配下に、次のファイルを配備\n 呼び出し側 実装前\nscope :name_search, lambda{|name| where ('last_name' || 'first_name') LIKE ?\u0026quot;, \u0026quot;%#{name}%\u0026quot; }  実装後\nscope :name_search, lambda{|name| where(\u0026quot;#{connection.concat('last_name', 'first_name')} LIKE ?\u0026quot;, \u0026quot;%#{name}%\u0026quot;) }  以上で、実装終了！！\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/25/beautifyruby/",
+        "title": "Sublime Text2でRubyソースをフォーマットしたい",
+        "section": "post",
+        "date" : "2013.05.25",
+        "body": "Sublime Text2でrubyのソースのフォーマットしたいですよね\n\nはい、これ → BeautifyRuby\nサポート範囲 次がフォーマットできます .html .erb .rb .rake Rakefile Gemfile\nインストール方法 インストールは次の２つから選べる、どちらでもどうぞ！！\n詳しくは、BeautifyRubyのReadmeにもインストール方法の記載があるよ。\n(1)自動でインストール  Sublime Text2上で、次のキーを打つべし!! \u0026ldquo;cmd + shift + p\u0026rdquo; Package Controlに次を入力、Enter BeautifyRuby はい、終わり！！  (2)手動でインストール cd \u0026quot;~/Library/Application Support/Sublime Text 2/Packages/\u0026quot; git clone git://github.com/CraigWilliams/BeautifyRuby.git  はい、終わり！！\n実行方法 フォーマットしたソースを開いて ctrl + alt + k\n困っていること。 rbenvを利用しているとなぜだかできない。\nフォーマットしようとすると、次のようなエラーが発生する 「check your ruby interpreter settings」 githubでissuesで解決方法が上がっていて試したけど、だめだった。\nくやしー\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/23/javascript/",
+        "title": "JavaScriptでクラスを定義する",
+        "section": "post",
+        "date" : "2013.05.23",
+        "body": "JavaScriptでこのように定義することで、グローバル領域を汚すことなくすっきり定義できます。\n\neclipse上では、StringUtils.と入力すれば、メソッドは補完してくれます。\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/23/rails/",
+        "title": "特定の環境を除いてgemをインストールしたい",
+        "section": "post",
+        "date" : "2013.05.23",
+        "body": "毎回忘れるので、とりあえずメモしまーす。\nGemfileを次のように記述する。\n\ngroup :production do gem 'mysql2' end  次のようにbundle installすれば、開発環境では、mysql2を除外できる。 bundle install \u0026ndash;path=vendor/bundle \u0026ndash;without production\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/22/java2/",
+        "title": "warタスクでMETA-INFフォルダに特定のファイルを含める方法",
+        "section": "post",
+        "date" : "2013.05.22",
+        "body": "warファイルを生成する際にMETA-INFフォルダに特定のファイルを含めたくて探していたら、次のサイトにやり方で実装できました。ありがたや、ありがたや\n参考サイト\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/22/java/",
+        "title": "windowsのファイル共有からファイルを読み込む方法",
+        "section": "post",
+        "date" : "2013.05.22",
+        "body": "JCIFSを使って実現します。\nJCIFSとは？  JCIFSはCIFS/SMBプロトコルを実装したオープンソースのJavaライブラリです。 CIFSはMicrosoftのWindowsプラットフォーム上のファイル共有プロトコルです。 JCIFSを使用するとJavaアプリケーションからWindows共有ネットワークにアクセスできます。 LGPLで公開されています。  \n参考サイト  ファイル名を取得するサンプル ファイルの内容を取得するサンプル  close漏れの恐怖 /* 悪いソースの例 */ SmbFile smbFile = new SmbFile(smbUrl); java.io.InputStream inputStream = new SmbFileInputStream(smbFile);  SmbFileInputStreamをnewしてinputStreamを取り出したのはいいけどクローズが漏れていた。\n2時間半くらいは平気で動くけど、それ以降エラーが発生するようになるので要注意!!\n以下、その時のエラーログ\njcifs.smb.SmbException: A device attached to the system is not functioning. at jcifs.smb.SmbTransport.checkStatus(SmbTransport.java:545) at jcifs.smb.SmbTransport.send(SmbTransport.java:645) at jcifs.smb.SmbSession.send(SmbSession.java:244) at jcifs.smb.SmbTree.send(SmbTree.java:119) at jcifs.smb.SmbFile.send(SmbFile.java:770) at jcifs.smb.SmbFile.open0(SmbFile.java:982) at jcifs.smb.SmbFile.open(SmbFile.java:999) "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/20/luida01/",
+        "title": "Facebook的なユーザ検索を実装したの時のメモ",
+        "section": "post",
+        "date" : "2013.05.20",
+        "body": "実装イメージ こんな感じの検索を実装したい。とりあえずはユーザ検索を実現する。\n\n実装手順  トピックブランチの作成  #readmineのチケット番号でトピックブランチを作成 git checkout -b ticket25   コントローラを追加   be rails g controller serach index   viewの編集  編集中\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/13/postgresql-08/",
+        "title": "PostgreSQL 組込み関数と演算子",
+        "section": "post",
+        "date" : "2013.05.13",
+        "body": " 日付を取得するにもいろいろな関数がある、トランザクション開始の時刻を取得するものなど用途によって使い分ける必要がありそうだ。\nトランザクション開始時の日時を取得する関数    関数名 説明     now() タイムスタンプを取得する   current_timestamp タイムスタンプを取得する   localtimestamp タイムスタンプを取得する   localtime 時刻を取得する   current_time 時刻を取得する   current_date 日付を取得する    SQL開始時の日付/時刻を取得する関数 この関数は、１つのSQL内で複数回実行しても、同じ日時を取得する。\n   関数名 説明     statement_timestamp() タイムスタンプを取得する    関数実行時の日時/時刻を取得する関数    関数名 説明     clock_timestamp() タイムスタンプを取得する    文字列のマッチングを行う演算子    使い方 説明     select \u0026lsquo;abc\u0026rsquo; ~ \u0026lsquo;^a\u0026rsquo; =\u0026gt; true 正規表現に一致する場合は真となる。大文字/小文字を区別する   select \u0026lsquo;abc\u0026rsquo; ~* \u0026lsquo;^A\u0026rsquo; =\u0026gt; true 正規表現に一致する場合は真となる。大文字/小文字を区別しない   select \u0026lsquo;abc\u0026rsquo; !~ \u0026lsquo;^A\u0026rsquo; =\u0026gt; true 正規表現に一致しない場合は真となる。大文字/小文字を区別する   select \u0026lsquo;abc\u0026rsquo; !~* \u0026lsquo;^z\u0026rsquo; =\u0026gt; true 正規表現に一致しない場合は真となる。大文字/小文字を区別しない    "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/11/postgresql-07/",
+        "title": "PostgreSQL 基本的な運用管理",
+        "section": "post",
+        "date" : "2013.05.11",
+        "body": "PostgreSQLの基本的な運用管理について整理してきます。\n\nデータベースユーザの追加/変更/削除 実行例 ★編集中★  VACUUM ★概要 編集中★\n実行例 ★編集中★  ANALYZE ★概要 編集中★\n実行例 ★編集中★  自動バキューム機能  VACUUMとANALYZEを自動的に実行する機能 データベース内の不要領域の割合が多くなったテーブルに対して必要に応じてVACUUMとANALYZEを適宣実行する。 PostgreSQL 9.0では自動バキューム機能がデフォルトでONになっている。  システム情報関数 version() ★概要 編集中★\n実行例 ★編集中★  current_database() ★概要 編集中★\n実行例 ★編集中★  current_user user ★概要 編集中★\n実行例 ★編集中★  情報スキーマ 情報スキーマの見方 ★編集中★  システムカタログの見方 ★編集中★  特記事項  pg_rolesビューは、pg_authidカタログのビューです。 pg_databaseカタログはデータベースごとに存在するものではなく書くデータベースクラスタに１つ存在する。 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/11/rubymotion/",
+        "title": "rubyMotion",
+        "section": "post",
+        "date" : "2013.05.11",
+        "body": "Web+DB PRESS vol.74でRubyMotionの記事があったので読んでみた。 Objective-Cはなんとなく馴染めなかったので、RubyでiOSアプリが作れるのは嬉しい\n\nRubyMotionとは？  RubyでiOSのネイティブアプリケーションが作れるツールチェイン Objective-Cのコードを中間で吐き出すブリッジのような実装ではない。 Objective-Cランタイム上にRubyを再実装している。 完全にネイティブなアプリをビルドするコンパイラを実現した点がウリ 速度、安全性、その他の面でObjective-Cでかかれたアプリに匹敵するアプリを作れる。 App Storeで配信することも可能 ライセンスは有料(2万円) 2年目からは半額  え、有料なの、しかも２万円ってここで断念！！\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/10/postgresql-06/",
+        "title": "PostgreSQL バックアップとリストア",
+        "section": "post",
+        "date" : "2013.05.10",
+        "body": "PostgreSQLのバックアップとリストについて整理しています。\n\n1.オンラインバックアップ 主な用途はPostgreSQLのバージョン間でデータを以降する場合、他のDBMSから移行する、システム開発時に一時的にバックアップしたい等々があるのかな？　但し、ログファイルや設定ファイルはバックアップされない\n1.1 コマンドでバックアップ    コマンド 説明     pg_dump databaseを指定してバックアップ   pg_dumpall 全データベースをバックアップ   pg_restore pg_dumpで-Fc -Ftを指定して取得したダンプファイルをリストアする場合に使用する   copy データをCSVファイル形式で抽出したり、登録したりできる    カスタム形式でのバックアップ＆リストア #バックアップ pg_dump -Fc examdb -f examdb.dump #リストア pg_restore examdb.dump  平文でのバックアップ＆リストア #バックアップ pg_dump postgres -f postgres.dump #リストア psql -f postgres.dump  平文で全データベースをバックアップ＆リストア #バックアップ pg_dumpall -f dumpall.dump #リストア psql -f postgress.dump  特記事項  平文形式のバックアップは、主に次の場合に使用する。  異なるOS間でのデータ移行 PostgreSQLのバージョン間でのデータ移行  カスタム形式は、実運用ではよく使われる。 ユーザのアクセスを妨げる事無くバックアップができる。 一貫性のあるバックアップができる。 pg_restoreコマンドで-dでデータベース名を指定しない場合は、標準出力に平文形式のSQLを表示する。 PostgreSQLの稼働中に実行する事を覚えておきましょう。 リストア前にデータを削除するには、 -cオプションを付ける。  COPYコマンド スーパーユーザでログインする必要がある\n1.2 定期的にバックアップ　PITR(Point In Time Recovery) 実運用で定期的にバックアップするならこっちだろうな\nPITR 概要 ある時点でベースバックアップを取得して、日々のバックアップは差分で取得するよなバックアップの仕方\nリストアする際は、ベースバックアップ、差分バックアップの順にリストアして行く。\n   用語 説明     ベースバックアップ ある時点でデータベース全体のバックアップを取得したもの   WAL コミットした時に変更内容が書き込まれるログ   先行書込みログ 上記の別名   WALアーカイブ WALは再利用されるので、再利用する前に別の場所に移したログ    PITR バックアップの流れ 1.前準備/設定 postgresql.confファイルの設定例 # WALに書き込まれる情報の度合いを指定する。デフォルト値はminimal # PITR使用時は、archiveまたは、hot_standbyを指定する wal_level = hot_standby # WALアーカイブを有効にするかどうかの指定。 # デフォルトはoff。PITR使用時はonを指定する。 archive_mode = no # WALファイルをWALアーカイブとしてコピーするためのジェルコマンドを指定する。 # %pはアーカイブするファイルのパス名に置換えられる # %fファイル名部分のみに置換えられる。 archive_command = 'cp %p /mnt/archivedir/%f'  2.ベースバックアップ ベースバックアップの手順\n# pg_start_backup()関数の実行 cd $PGDATA/ psql -c \u0026quot;SELECT pg_start_backup('label')\u0026quot; # データベースクラスタのディレクトリをまるごとバックアップ tar czvf /mnt/backup.tar.gz data # pg_stop_backup()関数の実行 psql -c \u0026quot;SELECT pg_stap_backup()\u0026quot;  3.差分バックアップ ここまでの設定で自動的に差分バックアップしてくれる。\nWALがいっぱいになると自動的にWALアーカイブログとして保存されるようになる。\nPITR リカバリの流れ 1.ベースバックアップのリストア # PostgreSQLが停止していることを確認 cd $PGDATA/ pg_ctl status vm $PGDATA /mnt # データがない事を確認 ls data # ベースバックアップを展開 tar xzvf /mnt/backup.tar.gz  2. オフラインバックアップ ** 作成中 **\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/08/postgresql-05/",
+        "title": "PostgreSQL 設定ファイル",
+        "section": "post",
+        "date" : "2013.05.08",
+        "body": "postgresql.confについて整理しています。 postgresql.conf PostgreSQLのパラメータを設定するファイル\nサーバ側の設定 【注意】 デフォルトはリモート接続できない\n   パラメータ 説明 反映タイミング　 初期値     listen_addresses リモートで接続を受け付けるサーバ側のIPアドレス\n初期はリモート接続できない 起動 localhost    クライアント側の設定    パラメータ 説明 反映タイミング　 初期値     search_path スキーマ検索パス いつでも \u0026rsquo;\u0026ldquo;$user\u0026rdquo;,public\u0026rsquo;   default_transaction_isolation トランザクション分離レベル いつでも read committed   client_encoding クライアントエンコーディング いつでも \u0026lsquo;SQL_ASCII\u0026rsquo;    エラー報告とログ取得 【注意】 デフォルトはログの内容がファイルに残らない\n   パラメータ 説明 反映タイミング　 初期値     log_destination サーバログの出力先 再読込 デフォルト stderr ・stderr サーバログを平文で標準エラー出力に出力する ・csvlog サーバログのCSV形式で標準エラー出力に出力する。logging_collerctor=on ・syslog　サーバログをsyslogに出力する   logging_collerctor ファイルにリダイレクトするか 起動 off   log_directory ログファイルを格納するディレクトリ 再読込 pg_log($PGDATA/pg_log)   log_file_name ログファイル名 再読込 postgresql-%Y-%m-%d_%H%M%S.log   log_min_messages ログレベル スーパユーザのみ WARNING   log_line_prefix サーバログの行頭に出力する内容 詳細 再読込 空文字    設定例 log_destination = 'syslog, stderr' logging_collector = on log_directory = 'examlog' log_filename = 'postgresql-%Y%m%d.log'  pg_hba.conf クライアント認証を設定するファイル\nデフォルト設定例 #UNIXドメインを使ったすべての接続を許可する。 #pg_hba.confデフォルト設定 local all all trust #ループバックアドレス（127.0.0.1)からすべての接続を許可する。 #pg_hba.confデフォルト設定 host all all 127.0.0.1/32 trust #192.168.16.8から、データベースユーザga #データベースexamdbにTCP/IPで接続するのを拒否する。 host examdb user1 192.168.16.8/32 reject #192.168.16.1～192.168.16.254のすべてのデータベースユーザについて #データベースexamdbに接続するときにパスワード認証する。 host examdb all 192.168.16.0/24 md5 #IPアドレスとサブネットマスクで設定する。 host examdb all 192.168.16.0 255.255.255.0 md5 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/06/postgresql-04/",
+        "title": "PostgreSQL コマンド",
+        "section": "post",
+        "date" : "2013.05.06",
+        "body": "PostgreSQLでよく使いそうなコマンド    コマンド 説明　 使用例     initdb 指定したディレクトリにデータベースクラスタを作成する initdb \u0026ndash;encoding=UTF8 \u0026ndash;no-locale /home/postgres/data   pg_ctl PostgreSQLサーバの初期化、起動、停止、制御 pg_ctl start -D /home/postgre/data -w -t 120   createuser データベースユーザを登録する createuser -U user1 -P   dropuser データベースユーザを削除する dropuser -i user1   cratedb データベースを作成する createdb -U user1 examdb ★=\u0026gt; user1でexamdbを作成、テンプレートデータベースはtemplate1   psql -l データベースを確認する psql -l   dropdb データベースを削除する dropdb -U user1 -i examdb ★=\u0026gt; user1でexamdbを削除 -iは削除前に確認する   createlang 手続き言語を登録する createlang plpgsql template1\n★=\u0026gt; plpgsqlをtemplate1に登録\ncreatelang -l template1   droplang 手続き言語を削除する droplang plpgsql template1\n★=\u0026gt; plpgsqlをtemplate1から削除   reindexdb インデックスを再作成する reindexdb test   psql データベースへ接続する psql -U user1 examdb    よく使いそうなpsqlのメタコマンド\n   メタコマンド 説明     \\q psqlを終了する。   \\l データベースの一覧を表示する。\u0026rdquo;psql -l\u0026rdquo;と同じ効果   \\dパターン 指定したパターンに名前が一致するテーブル、インデックス、ビュー、シーケンスの攻勢情報を表示する   \\d テーブル、ビュー、シーケンスの一覧を表示する   \\du データベースユーザの一覧を表示する   \\dn スキーマの一覧を表示する   \\dt テーブルの一覧を表示する   \\di インデックスの一覧を表示する   \\dv ビューの一覧を表示する   \\ds シーケンスの一覧を表示する   \\? メタコマンドの一覧を表示する    よく使いそうなpsqlのコマンド\n   コマンド 説明 使用例     SET パラメータを設定する。 SET search_path TO \u0026lsquo;exam_schema\u0026rsquo;;   SHOW パラメータを確認する。 SHOW search_path / SHOW ALL   "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/05/categories/",
+        "title": "categories",
+        "section": "post",
+        "date" : "2013.05.05",
+        "body": "カテゴリから記事を選択したくなったので、ググってみたら\u0026rdquo;いい感じ\u0026rdquo;のpluginを発見!!\n\n導入イメージ  次のサイトを参考にしたら、サクッと軽く導入できた！！ octopressでカテゴリ表示する方法  ちょっとカスタマイズしたところ 「tag_cloud.html」だと、横にずらずらっと表示されて好みじゃなかったので、「category_list.html」に変更した。 これだと縦にカテゴリが並んでいい感じ！！(上記のイメージ)\ndefault_asides: [custom/asides/category_list.html, asides/github.html, asides/googleplus.html] "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/05/01/vagrant/",
+        "title": "vagrantインストール",
+        "section": "post",
+        "date" : "2013.05.01",
+        "body": "chef soloの記事を読んでいたら、vagrantという面白いツールを見つけたので、とりあえずインストール\n\nvagrantってなに？  Vagrant は、Ruby で組まれたスクリプトで、仮想マシン上の開発環境の構築・配布の自動化を支援するためのツールらしい。 CentOSとかのイメージがありそのまま使える！！  インストール環境  ホストOS windows7 64bit ruby 1.9.3  インストール手順  VirtualBoxインストール vagrentインストール\ngem install vagrent   *注意 サイトからダウンロードしてインストールすると、設定ファイルの内容がちょっと違っていた。\ngemからインストールを推奨\n参考サイト  saharaをインストール "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/04/30/postgresql-02/",
+        "title": "PostgreSQL インストール",
+        "section": "post",
+        "date" : "2013.04.30",
+        "body": "PostgreSQLのインストールについて説明します。\n\nインストール環境 CentOS 6.3\nインストール手順 postgresユーザの作成\nsu - useradd postgres passwd postgres  関連ライブラリのインストール\nsu - yum install gcc yum install readline yum install zlib yum install flex #2.5.31以降 yum install bison #1.875以降  postgresSQLインストール(ソースコードから) ソース一覧\ncd /usr/local/src wget http://ftp.postgresql.org/pub/source/v9.0.9/postgresql-9.0.9.tar.gz tar xzvf postgresql-9.0.9.tar.gz cd postgresql-9.0.9 ./configure make \u0026amp;\u0026amp; make install #インストール先のディレクトリ　/usr/local/pgsql  インストール後の設定\nsu - postgres vi ~/.bash_profile export PATH=/usr/local/pgsql/bin:$PATH export LD_LIBRARY_PATH=/usr/local/pgsql/lib:$LD_LIBRARY_PATH #これを指定すると以降で、-Dを指定しなくて済む export PGDATA=~/data source ~/.bash_profile  起動 initdb -D /home/postgres/data \u0026ndash;no-locale pg_ctl start -D /home/postgres/data -w\n確認 psql\n停止 pg＿ctl stop -D /home/postgres/data\nアンインストール\n#ソースコードのディレクトリで実行 make uninstall # 必要に応じて、次の後処理を行う # ・~/.bash_profileを元に戻す。 # ・PostgreSQL操作用アカウントを削除する。 # ・データベースクラスタのディレクトリを削除する。 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/04/30/postgresql-01/",
+        "title": "postgreSQL特徴",
+        "section": "post",
+        "date" : "2013.04.30",
+        "body": "なぜPostgreSQLなのか?  MySQLと違い商用でも無償で利用可能で、改変も自由にできる。 自社製品にPostgreSQLを組み込んで販売してもOKということ！！ しかも自社製品のソースを公開する必要がない!!  \n他のDBMSにないであろう機能  シーケンス専用のデータ型(serial,bigserial)がある。このデータ型にするとシーケンスを自動的に作ってくれる！！(なんとすばらしい) データ型に配列がある。（非正規形やり放題！！） 関数インデックス -\u0026gt; インデックスに関数が使用できる\nCRATE INDEX tbl_idx2 ON tbl (upper(c1));  部分インデックス -\u0026gt; あるカラムが、9割が同じ値の場合、残り１割にだけインデックスを作成できる機能\n/* c1の値が100より小さい部分にインデックスを作成 */ CRATE INDEX tbl_idx ON tbl (c1) WHERE c1 \u0026lt; 100;  psqlのメタコマンドで簡単にテーブル、インデクスの一覧が確認できる。\n  オープンソースデータベース PostgreSQL Global Development Groupによりコミュニティベースで公開され、開発、配布されている。\nマルチプラットフォーム LinuxやWindwosなど様々なOSで動作する。\nレプリケーション PostgreSQL 9.0からは、ホットスタンバイとストリーミングレプリケーションによる非同期レプリケーションが利用可能\nリンク  PostgreSQLとは? PostgreSQL9.0の新機能  用語    用語 説明     データベースクラスタ データベースの格納領域(以下ディレクトリ）   ディレクトリ構造    PostgreSQLサーバ PostgreSQLのデーモン、サービス   インスタンス データベースクラスタとPostgresQLサーバの組   PostgreSQLの管理ユーザ データベースクラスタを作成したOSユーザ   データベースユーザ その名の通りデータベースのユーザ、但しデータベースクラス全体で共通   スーパーユーザ データベースに対するあらゆる操作が可能\nデータベースクラスタ作成時のOSユーザで、スーパーユーザが初期状態で作成される   一般ユーザ スーパーユーザ権限を持たないユーザ   "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/2013/04/26/metaprogramming_ruby_01/",
+        "title": "メタプログラミング Ruby オブジェクトモデル",
+        "section": "post",
+        "date" : "2013.04.26",
+        "body": "「メタプログラミング Ruby」を読み始めました。 そこで気づいた事を、適当にまとめていきまーす。\n\n()内はページ番号を示します。\n第１章オブジェクトモデル    用語 説明     イントロスペクション 言語要素に近づいて質問すること   オープンクラス 既存のクラスにメソッドを追加すること   ネームスペース Rakeのような定数をまとめるだけのモジュールのこと(P52)   クラス再訪 クラスはオブジェクトであるクラスはClassクラスのインスタンス(P47)   スコープ演算子 ::    理解したこと  インスタンスにメソッドはない、クラスにメソッドがある。 プログラムにあるすべての定数はまるでファイルシステムのようである。モジュールがディレクトリで、定数がファイル(P50) requireとloadの主な違い モジュールの定義1 module -\u0026gt; class -\u0026gt; method モジュールの定義2 module -\u0026gt; method     条件　 require load     同じファイルの実行 何度実行しても一度しか実行しない 実行された回数だけ実行する。   ファイルの拡張子(.rbなど)を省略 自動的に補完する 補完しない    ギリ理解したこと  Rubyの*class*キーワードは、クラス宣言というよりもスコープ演算子のようなものである。 "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/1/01/01/string/",
+        "title": "",
+        "section": "post",
+        "date" : "0001.01.01",
+        "body": "\u0026rdquo;+++ title = \u0026ldquo;pythonの文字列、数値を知る\u0026rdquo; tags = [\u0026ldquo;Python\u0026rdquo;] date = \u0026ldquo;2016-06-25\u0026rdquo; banner = \u0026ldquo;banners/python.png\u0026rdquo; +++\n今回は文字列や数値の扱い方についてまとめています。\n - 文字列のフォーマット\n % 古い書式指定\n\u0026gt;\u0026gt;\u0026gt; \u0026quot;%02d\u0026quot; % (1) '01'  format 新しい書式指定\n インデックスによるアクセス  \u0026gt;\u0026gt;\u0026gt; '{0:02d}, {1}, {2}'.format(2, 'b', 'c') 'a, b, c' \u0026gt;\u0026gt;\u0026gt; '{}, {}, {}'.format('a', 'b', 'c') # 2.7+ only 'a, b, c' \u0026gt;\u0026gt;\u0026gt; '{2}, {1}, {0}'.format('a', 'b', 'c')   keyによるアクセス  \u0026gt;\u0026gt;\u0026gt; 'Coordinates: {latitude}, {longitude}'.format(latitude='37.24N', longitude='-115.81W') 'Coordinates: 37.24N, -115.81W' \u0026gt;\u0026gt;\u0026gt; coord = {'latitude': '37.24N', 'longitude': '-115.81W'} \u0026gt;\u0026gt;\u0026gt; 'Coordinates: {latitude}, {longitude}'.format(**coord) 'Coordinates: 37.24N, -115.81W'   参考サイト  公式ドキュメント   文字の比較\n\u0026gt;\u0026gt;\u0026gt; poem = '''All that doth flow we cannot liguid name ... Or else would fire and water be the same; ... But that is liquid which is moist and wet ... Fire that property can never get. ... Then 'tis not cold that doth the fire put out ... But 'tis the wet that makes it die, no doubt.'''  \u0026gt;\u0026gt;\u0026gt; len(poem) 250 \u0026gt;\u0026gt;\u0026gt; poem.startswith('All') #先頭一致 True \u0026gt;\u0026gt;\u0026gt; poem.endswith('That\\'s all, folks!') #後方一致 False \u0026gt;\u0026gt;\u0026gt; poem.find('the') # 前から一致位置を取得 73 \u0026gt;\u0026gt;\u0026gt; poem.rfind('the') #後ろから一致位置を取得 214 \u0026gt;\u0026gt;\u0026gt; poem.count('the') 3 \u0026gt;\u0026gt;\u0026gt; poem.isalnum() #英数字かどうか（記号は除く） False  大文字と小文字の区別、配置　title()タイトルケースがいいですね。\n\u0026gt;\u0026gt;\u0026gt; setup = 'a duck goes into a bar...' \u0026gt;\u0026gt;\u0026gt; setup.strip('.') 'a duck goes into a bar' \u0026gt;\u0026gt;\u0026gt; setup.capitalize() 'A duck goes into a bar...' \u0026gt;\u0026gt;\u0026gt; setup.title() 'A Duck Goes Into A Bar...' \u0026gt;\u0026gt;\u0026gt; setup.lower() 'a duck goes into a bar...' \u0026gt;\u0026gt;\u0026gt; setup.swapcase() 'A DUCK GOES INTO A BAR...'  文字列のスライス [start : end : step ]\n\u0026gt;\u0026gt;\u0026gt; letters = 'abcdefghijklmnopqrstuvwxyz' \u0026gt;\u0026gt;\u0026gt; letters[0] a \u0026gt;\u0026gt;\u0026gt; letters[-1] z \u0026gt;\u0026gt;\u0026gt; letters[20:] 'uvwxyz' \u0026gt;\u0026gt;\u0026gt; letters[4:20:3] #4文字目から 19文字目までを3文字毎に抽出 'ehknqt'  文字の結合　Joinはなんか気持ち悪いです。\n\u0026gt;\u0026gt;\u0026gt; arr = ['a', 'b', 'c'] \u0026gt;\u0026gt;\u0026gt; print(', '.join(arr)) a, b, c  整数の除算(切捨て)がある。\n# 整数の除算(切捨て) \u0026gt;\u0026gt;\u0026gt; 7 // 2 3  型変換\n# int \u0026gt;\u0026gt;\u0026gt; int(98.6) 98 # float \u0026gt;\u0026gt;\u0026gt; float(98) 98.0 \u0026gt;\u0026gt;\u0026gt; float('99') 99.0 # String \u0026gt;\u0026gt;\u0026gt; str(98.6) '98.6'  intはPyhon2までは、32ビットに制限されていたがPyhone3から制限はなくなった。こんなに大きな数字でも整数オーバーフローは発生しません。\n\u0026gt;\u0026gt;\u0026gt; 10**100 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000  print()\n\u0026gt;\u0026gt;\u0026gt; print('aa', 'bb', 'cc') aa bb cc   勉強に使用している本 非常に分かりやすくておすすめです。\nプログラムは経験あるけどPythonは初心者って方に、絶対おすすめの１冊です。\n Pythonのタプル、集合へ\n"
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/1/01/01/docker/",
+        "title": "docker",
+        "section": "post",
+        "date" : "0001.01.01",
+        "body": "\n   コマンド 内容     ps コンテナの一覧   run イメージからスナップショット（コンテナ）を作成して起動   start スナップショットを起動   stop スナップショットを停止   restart スナップショットの再起動   kill スナップショットの強制停止   rm スナップショットの削除   images イメージの一覧   pull イメージをレジストリからダウンロード   build dockerfileからイメージの作成   diff 起動中のコンテナからイメージの作成   commit 起動中のコンテナからイメージの作成   rmi イメージの削除   push イメージをレジストリへアップロード   cp 起動中のコンテナからホストマシンへファイルのコピー   exec 起動中のコンテナ内へ新たなプロセスを注入   "
+    }
+,
+    {
+        "ref": "https://tigawa.github.io/blog/1/01/01/hugo/",
+        "title": "hugo",
+        "section": "post",
+        "date" : "0001.01.01",
+        "body": "下書きしています。 \n"
+    }
+]

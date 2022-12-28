@@ -2,14 +2,15 @@
 &lt;p>GitHub Pages でネイキッドドメインで運用するにあたり、備忘録を残して置きます。&lt;/p>
 &lt;p>ムームードメインで、ドメイン=&lt;code>igawa.blog&lt;/code> を取得しました。
 登録料は 5年間 = 1万円を超えたので、とりあえず1年で契約。1年だと500円以下で登録できました。&lt;/p></description></item><item><title>文字列フォーマットの世界</title><link>https://igawa.blog/golang/string/</link><pubDate>Tue, 27 Dec 2022 23:57:01 +0900</pubDate><guid>https://igawa.blog/golang/string/</guid><description>&lt;p>&lt;code>%#v&lt;/code>を指定すると構造体の型名、フィールド名、値をわかりやすく表示します。&lt;/p>
-&lt;pre>&lt;code> f := &amp;amp;Foo{Bar: 1, Baz: &amp;quot;Hello, W+D Press!&amp;quot;}
-fmt.Printf(&amp;quot;%#v \n&amp;quot;, f)
-// =&amp;gt; &amp;amp;main.Foo{Bar:1, Baz:&amp;quot;Hello, W+D Press!&amp;quot;}
-&lt;/code>&lt;/pre>&lt;p>&lt;code>%v&lt;/code>を指定すると構造体の値のみを表示します。&lt;/p>
-&lt;pre>&lt;code> f := &amp;amp;Foo{Bar: 1, Baz: &amp;quot;Hello, W+D Press!&amp;quot;}
-fmt.Printf(&amp;quot;%v \n&amp;quot;, f)
-// =&amp;gt; &amp;amp;{1 Hello, W+D Press!}
-&lt;/code>&lt;/pre></description></item><item><title/><link>https://igawa.blog/cheat/shortcut/</link><pubDate>Sun, 21 Mar 2021 22:52:40 +0900</pubDate><guid>https://igawa.blog/cheat/shortcut/</guid><description>mac 説明 キー 録画 ⌘ + ⇧ + 5 Desktop 切替 ⌃ + ← or → Desktop 表示 Fn + F11 vscode IntelliJ Mac の装飾キー</description></item><item><title>Lambdaまとめ</title><link>https://igawa.blog/aws/lambda%E3%81%BE%E3%81%A8%E3%82%81/</link><pubDate>Sun, 21 Mar 2021 11:54:43 +0900</pubDate><guid>https://igawa.blog/aws/lambda%E3%81%BE%E3%81%A8%E3%82%81/</guid><description>&lt;dl>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang"> &lt;span style="color:#a6e22e">f&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Foo&lt;/span>{&lt;span style="color:#a6e22e">Bar&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#a6e22e">Baz&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Hello, W+D Press!&amp;#34;&lt;/span>}
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;%#v \n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">f&lt;/span>)
+&lt;span style="color:#75715e">// =&amp;gt; &amp;amp;main.Foo{Bar:1, Baz:&amp;#34;Hello, W+D Press!&amp;#34;}
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>%v&lt;/code>を指定すると構造体の値のみを表示します。&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang"> &lt;span style="color:#a6e22e">f&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Foo&lt;/span>{&lt;span style="color:#a6e22e">Bar&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#a6e22e">Baz&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Hello, W+D Press!&amp;#34;&lt;/span>}
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;%v \n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">f&lt;/span>)
+&lt;span style="color:#75715e">// =&amp;gt; &amp;amp;{1 Hello, W+D Press!}
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title/><link>https://igawa.blog/cheat/shortcut/</link><pubDate>Sun, 21 Mar 2021 22:52:40 +0900</pubDate><guid>https://igawa.blog/cheat/shortcut/</guid><description>mac 説明 キー 録画 ⌘ + ⇧ + 5 Desktop 切替 ⌃ + ← or → Desktop 表示 Fn + F11 vscode IntelliJ Mac の装飾キー</description></item><item><title>Lambdaまとめ</title><link>https://igawa.blog/aws/lambda%E3%81%BE%E3%81%A8%E3%82%81/</link><pubDate>Sun, 21 Mar 2021 11:54:43 +0900</pubDate><guid>https://igawa.blog/aws/lambda%E3%81%BE%E3%81%A8%E3%82%81/</guid><description>&lt;dl>
 &lt;dt>Lambda について、&lt;a href="https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/welcome.html">aws のドキュメント&lt;/a>で気になるところの引用及びリンクをまとめます。&lt;/dt>
 &lt;dd>definition&lt;/dd>
 &lt;/dl></description></item><item><title>RDSでデータ破壊をCloudWatchで監視する</title><link>https://igawa.blog/aws/rds%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E7%A0%B4%E5%A3%8A%E3%82%92cloudwatch%E3%81%A7%E7%9B%A3%E8%A6%96%E3%81%99%E3%82%8B/</link><pubDate>Sat, 20 Mar 2021 22:50:48 +0900</pubDate><guid>https://igawa.blog/aws/rds%E3%81%A7%E3%83%87%E3%83%BC%E3%82%BF%E7%A0%B4%E5%A3%8A%E3%82%92cloudwatch%E3%81%A7%E7%9B%A3%E8%A6%96%E3%81%99%E3%82%8B/</guid><description>&lt;h2 id="参考">参考&lt;/h2>

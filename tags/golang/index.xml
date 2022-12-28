@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>golang on For myself tomorrow</title><link>https://igawa.blog/tags/golang/</link><description>Recent content in golang on For myself tomorrow</description><generator>Hugo -- gohugo.io</generator><language>ja</language><lastBuildDate>Tue, 27 Dec 2022 23:57:01 +0900</lastBuildDate><atom:link href="https://igawa.blog/tags/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>文字列フォーマットの世界</title><link>https://igawa.blog/golang/string/</link><pubDate>Tue, 27 Dec 2022 23:57:01 +0900</pubDate><guid>https://igawa.blog/golang/string/</guid><description>&lt;p>&lt;code>%#v&lt;/code>を指定すると構造体の型名、フィールド名、値をわかりやすく表示します。&lt;/p>
-&lt;pre>&lt;code> f := &amp;amp;Foo{Bar: 1, Baz: &amp;quot;Hello, W+D Press!&amp;quot;}
-fmt.Printf(&amp;quot;%#v \n&amp;quot;, f)
-// =&amp;gt; &amp;amp;main.Foo{Bar:1, Baz:&amp;quot;Hello, W+D Press!&amp;quot;}
-&lt;/code>&lt;/pre>&lt;p>&lt;code>%v&lt;/code>を指定すると構造体の値のみを表示します。&lt;/p>
-&lt;pre>&lt;code> f := &amp;amp;Foo{Bar: 1, Baz: &amp;quot;Hello, W+D Press!&amp;quot;}
-fmt.Printf(&amp;quot;%v \n&amp;quot;, f)
-// =&amp;gt; &amp;amp;{1 Hello, W+D Press!}
-&lt;/code>&lt;/pre></description></item></channel></rss>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang"> &lt;span style="color:#a6e22e">f&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Foo&lt;/span>{&lt;span style="color:#a6e22e">Bar&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#a6e22e">Baz&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Hello, W+D Press!&amp;#34;&lt;/span>}
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;%#v \n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">f&lt;/span>)
+&lt;span style="color:#75715e">// =&amp;gt; &amp;amp;main.Foo{Bar:1, Baz:&amp;#34;Hello, W+D Press!&amp;#34;}
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>%v&lt;/code>を指定すると構造体の値のみを表示します。&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang"> &lt;span style="color:#a6e22e">f&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Foo&lt;/span>{&lt;span style="color:#a6e22e">Bar&lt;/span>: &lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#a6e22e">Baz&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Hello, W+D Press!&amp;#34;&lt;/span>}
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;%v \n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">f&lt;/span>)
+&lt;span style="color:#75715e">// =&amp;gt; &amp;amp;{1 Hello, W+D Press!}
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>

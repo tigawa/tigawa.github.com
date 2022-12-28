@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>chrome on For myself tomorrow</title><link>https://tigawa.github.io/tags/chrome/</link><description>Recent content in chrome on For myself tomorrow</description><generator>Hugo -- gohugo.io</generator><language>ja</language><lastBuildDate>Sun, 27 Oct 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://tigawa.github.io/tags/chrome/index.xml" rel="self" type="application/rss+xml"/><item><title>chrome 拡張機能をリリースしました!!</title><link>https://tigawa.github.io/blog/2013/10/27/proofreading/</link><pubDate>Sun, 27 Oct 2013 00:00:00 +0000</pubDate><guid>https://tigawa.github.io/blog/2013/10/27/proofreading/</guid><description>&lt;p>その名も 「proofreading」 (プルーフリーディング)&lt;/p>
+&lt;p>&lt;!-- raw HTML omitted --> &lt;!-- raw HTML omitted -->&lt;!-- raw HTML omitted -->&lt;/p>
+&lt;p>あなたの書いた文章をチェックして、間違っているところを訂正します。&lt;/p>
+&lt;p>Webでメール、facebook、twitter、ブログ等々で文章を書くときに役立ててください。&lt;/p></description></item><item><title>chrome拡張機能 > background.jsからcontentscript.jsにメッセージを送る方法</title><link>https://tigawa.github.io/blog/2013/10/13/chrome-extensions-message/</link><pubDate>Sun, 13 Oct 2013 00:00:00 +0000</pubDate><guid>https://tigawa.github.io/blog/2013/10/13/chrome-extensions-message/</guid><description>&lt;p>わかる人にはわかるbackground.jsからcontentscript.jsにメッセージを送る方法を紹介します。&lt;/p>
+&lt;h3 id="簡単にやりたい事を説明します">簡単にやりたい事を説明します。&lt;/h3>
+&lt;p>chromeの右クリックメニューを追加して、追加したメニューをクリックした時に、表示しているサイトのベースカラーを変更したい。&lt;/p>
+&lt;ul>
+&lt;li>右クリックメニューを拡張してメニューを追加する場合は、&lt;code>background.js&lt;/code>に処理を記載します。&lt;/li>
+&lt;li>表示しているサイトに何か表示した場合は、&lt;code>contentscript.js&lt;/code>に処理を記載します。&lt;/li>
+&lt;/ul>
+&lt;p>background.jsから、contentscript.jsの関数は直接呼び出すことができません。その逆も同じです。&lt;/p>
+&lt;p>じゃーどうすればいいのか?&lt;/p></description></item><item><title>chromeの拡張機能の実装方法</title><link>https://tigawa.github.io/blog/2013/09/24/chrome-plugin/</link><pubDate>Tue, 24 Sep 2013 00:00:00 +0000</pubDate><guid>https://tigawa.github.io/blog/2013/09/24/chrome-plugin/</guid><description>&lt;p>chromeの拡張機能が意外に簡単に実装できるので、ご紹介したいと思います。&lt;/p>
+&lt;p>ざっくり説明するとhtmlで実装できます。&lt;/p></description></item></channel></rss>
